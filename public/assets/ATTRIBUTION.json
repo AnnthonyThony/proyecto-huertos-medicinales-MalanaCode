@@ -1,0 +1,106 @@
+{
+  "sabila": {
+    "wikimediaTitle": "File:Aloe Vera plant in a flowerpot.jpg",
+    "artist": "Sabina Bajracharya",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aloe_Vera_plant_in_a_flowerpot.jpg",
+    "localAsset": "/assets/plants/sabila.webp"
+  },
+  "cedron": {
+    "wikimediaTitle": "File:Aloysia citriodora 002.jpg",
+    "artist": "H. Zell",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aloysia_citriodora_002.jpg",
+    "localAsset": "/assets/plants/cedron.webp"
+  },
+  "manzanilla": {
+    "wikimediaTitle": "File:Matricaria chamomilla 2 RF.jpg",
+    "artist": "Robert Flogaus-Faust",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Matricaria_chamomilla_2_RF.jpg",
+    "localAsset": "/assets/plants/manzanilla.webp"
+  },
+  "toronjil": {
+    "wikimediaTitle": "File:Melissa officinalis J2.jpg",
+    "artist": "Jamain",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Melissa_officinalis_J2.jpg",
+    "localAsset": "/assets/plants/toronjil.webp"
+  },
+  "menta": {
+    "wikimediaTitle": "File:Pfefferminz-Blätter auf einem weißen Teller (2).jpg",
+    "artist": "Roman Eisele",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pfefferminz-Bl%C3%A4tter_auf_einem_wei%C3%9Fen_Teller_(2).jpg",
+    "localAsset": "/assets/plants/menta.webp"
+  },
+  "oregano": {
+    "wikimediaTitle": "File:Origanum vulgare inflorescence - Keila.jpg",
+    "artist": "Ivar Leidus",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Origanum_vulgare_inflorescence_-_Keila.jpg",
+    "localAsset": "/assets/plants/oregano.webp"
+  },
+  "matico": {
+    "wikimediaTitle": "File:Hojas de cordoncillo negro (Piper Aduncum).jpg",
+    "artist": "Martín Huamán/Archivo Centro Takiwasi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hojas_de_cordoncillo_negro_(Piper_Aduncum).jpg",
+    "localAsset": "/assets/plants/matico.webp"
+  },
+  "llanten": {
+    "wikimediaTitle": "File:Plantago mayor (Llantén).jpg",
+    "artist": "Mockingbird291",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Plantago_mayor_(Llant%C3%A9n).jpg",
+    "localAsset": "/assets/plants/llanten.webp"
+  },
+  "calendula": {
+    "wikimediaTitle": "File:Ringelblume (Calendula officinalis) Blüte focus stack-20220619-RM-165610.jpg",
+    "artist": "Ermell",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ringelblume_(Calendula_officinalis)_Bl%C3%BCte_focus_stack-20220619-RM-165610.jpg",
+    "localAsset": "/assets/plants/calendula.webp"
+  },
+  "ruda": {
+    "wikimediaTitle": "File:Ruta graveolens RF.jpg",
+    "artist": "Robert Flogaus-Faust",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ruta_graveolens_RF.jpg",
+    "localAsset": "/assets/plants/ruda.webp"
+  },
+  "romero": {
+    "wikimediaTitle": "File:Rosemary white bg.jpg",
+    "artist": "User:Fir0002",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rosemary_white_bg.jpg",
+    "localAsset": "/assets/plants/romero.webp"
+  },
+  "hierbaluisa": {
+    "wikimediaTitle": "File:Lemongrass (Cymbopogon citratus).jpg",
+    "artist": "Mokkie",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Lemongrass_(Cymbopogon_citratus).jpg",
+    "localAsset": "/assets/plants/hierbaluisa.webp"
+  },
+  "garden_hanging": {
+    "wikimediaTitle": "File:Hanging Flower Basket 1.jpg",
+    "artist": "JarroNevsbaru",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hanging_Flower_Basket_1.jpg",
+    "localAsset": "/assets/gardens/garden-hanging.webp"
+  }
+}

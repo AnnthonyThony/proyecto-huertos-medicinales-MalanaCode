@@ -1,0 +1,35 @@
+{
+  "name": "kawsapacha-mvp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototipo académico de huertos comunitarios — primera entrega funcional",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:push": "prisma db push",
+    "db:seed": "node prisma/seed.js",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check src/server.js && node --check public/app.js && node --check prisma/seed.js",
+    "postinstall": "prisma generate",
+    "build": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "6.14.0",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.3.7",
+    "bootstrap-icons": "^1.13.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "gsap": "^3.15.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "prisma": "6.14.0",
+    "sharp": "^0.35.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

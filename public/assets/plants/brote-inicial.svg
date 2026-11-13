@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <ellipse cx="60" cy="100" rx="22" ry="6" fill="#17110b" fill-opacity="0.45"/>
+  <path d="M60 99 C60 80 60 66 60 52" stroke="#5e8c4c" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M60 62 C52 58 41 53 33 43 C31 40 33 35 38 35 C49 36 57 46 60 58 Z" fill="url(#leafLeft)"/>
+  <path d="M60 58 C53 49 45 43 38 39" stroke="#99c67c" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+  <path d="M60 59 C68 54 79 49 87 39 C89 36 86 31 81 31 C70 33 63 43 60 55 Z" fill="url(#leafRight)"/>
+  <path d="M60 55 C67 46 75 40 82 35" stroke="#a6d18a" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+  <path d="M60 54 C58 44 59 35 61 28 C62 36 62 45 60 54 Z" fill="#7ab55f"/>
+  <defs>
+    <linearGradient id="leafLeft" x1="33" y1="36" x2="60" y2="62" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8ec772"/>
+      <stop offset="100%" stop-color="#4e7d41"/>
+    </linearGradient>
+    <linearGradient id="leafRight" x1="87" y1="32" x2="60" y2="59" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#9ad17d"/>
+      <stop offset="100%" stop-color="#48753c"/>
+    </linearGradient>
+  </defs>
+</svg>
+

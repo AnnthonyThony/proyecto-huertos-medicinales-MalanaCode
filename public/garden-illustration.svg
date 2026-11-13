@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 265" fill="none">
+  <path d="M32 213c43-23 224-25 267 0" stroke="#9CB09A" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="162" cy="230" rx="116" ry="15" fill="#CAD3B7"/>
+  <path d="M61 188l98-36 107 35-100 42-105-41Z" fill="#B8AD8B"/>
+  <path d="m61 188 105 41v16L61 201v-13ZM166 229l100-42v14l-100 44v-16Z" fill="#8D826A"/>
+  <path d="m84 184 76-27 79 28-76 32-79-33Z" fill="#6B5943"/>
+  <path d="m113 192 70-24M138 202l70-24" stroke="#8E7351" stroke-width="3"/>
+  <path d="M115 189c-16-20-19-43-12-61M115 188c3-34 15-61 34-80M174 191c-4-25-1-45 4-65M219 191c-5-24-6-47 3-66" stroke="#3C7751" stroke-width="5" stroke-linecap="round"/>
+  <path d="M103 153c-28 0-39-20-41-35 21-1 35 11 41 35ZM109 142c25-6 35-24 34-39-22 4-33 17-34 39ZM141 119c-30-5-36-22-34-41 20 6 31 20 34 41ZM155 99c1-25 15-39 31-43 1 24-12 38-31 43ZM176 151c-23-10-28-27-26-40 19 7 27 20 26 40ZM182 143c20-4 29-16 32-31-18 1-30 13-32 31ZM222 155c-25-11-32-28-31-46 20 5 32 23 31 46ZM226 144c22-5 36-20 38-38-22 2-35 18-38 38Z" fill="#759C71" stroke="#467C55" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M101 135c-7-16-4-35 7-44 11 10 10 31-7 44ZM204 145c-2-22 7-39 19-45 10 17 1 35-19 45Z" fill="#A7B579" stroke="#648660" stroke-width="2"/>
+  <path d="M263 188c-4-18-2-37 8-47M270 168c-11-4-18-15-18-26 12 2 20 10 18 26ZM271 160c15-2 23-11 25-24-14 1-24 11-25 24Z" stroke="#3B7952" stroke-width="3" fill="#8AAD7B"/>
+  <path d="M56 235h218" stroke="#D7D5C0" stroke-width="1.5"/>
+  <circle cx="258" cy="70" r="24" fill="#E2D5A6"/>
+  <path d="M53 102h46M68 90h18M245 96h31" stroke="#CCD1B6" stroke-width="2" stroke-linecap="round"/>
+</svg>

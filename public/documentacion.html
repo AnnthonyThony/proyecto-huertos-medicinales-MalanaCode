@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Especificación Oficial de Requisitos V1 · Kawsapacha (MSP / EPN)</title>
+  <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/vendor/icons/bootstrap-icons.min.css">
+  <style>
+    :root {
+      --bg-canvas: #0d1310;
+      --bg-surface: #141d18;
+      --bg-subtle: #1c2721;
+      --border-subtle: #2d3e34;
+      --border-accent: #3d5a49;
+      --text-main: #e8edea;
+      --text-muted: #9bb0a4;
+      --brand-green: #2d6a4f;
+      --brand-accent: #52b788;
+      --brand-light: #74c69d;
+      --code-bg: #090e0c;
+      --badge-bg: rgba(82, 183, 136, 0.15);
+      --badge-text: #95d5b2;
+      --card-hover: #1f2c25;
+      --thermal-hot: #ef4444;
+      --thermal-cold: #10b981;
+    }
+
+    [data-theme="light"] {
+      --bg-canvas: #f8faf8;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f0f4f1;
+      --border-subtle: #d6e2d9;
+      --border-accent: #b7ccbc;
+      --text-main: #1b2820;
+      --text-muted: #566e60;
+      --brand-green: #1b4332;
+      --brand-accent: #2d6a4f;
+      --brand-light: #40916c;
+      --code-bg: #eef3ef;
+      --badge-bg: rgba(45, 106, 79, 0.1);
+      --badge-text: #1b4332;
+      --card-hover: #e8f0ea;
+      --thermal-hot: #dc2626;
+      --thermal-cold: #059669;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.85rem 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--brand-green), var(--brand-accent));
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    .docs-container {
+      display: flex;
+      max-width: 1450px;
+      margin: 0 auto;
+      min-height: calc(100vh - 65px);
+    }
+
+    .docs-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border-subtle);
+      padding: 1.75rem 1.25rem;
+      position: sticky;
+      top: 65px;
+      height: calc(100vh - 65px);
+      overflow-y: auto;
+    }
+
+    .docs-content {
+      flex: 1;
+      padding: 2.5rem 3rem 5rem;
+      max-width: 1050px;
+    }
+
+    .nav-group-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+      padding-left: 0.6rem;
+    }
+
+    .docs-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.65rem;
+      border-radius: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .docs-nav-link:hover {
+      color: var(--text-main);
+      background-color: var(--bg-subtle);
+    }
+
+    .docs-nav-link.active {
+      color: var(--brand-accent);
+      background-color: var(--badge-bg);
+      font-weight: 600;
+    }
+
+    h1, h2, h3, h4, h5 {
+      color: var(--text-main);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    h3 {
+      font-size: 1.15rem;
+      margin-top: 1.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      border: 1px solid var(--border-accent);
+    }
+
+    .callout {
+      border-left: 4px solid var(--brand-accent);
+      background-color: var(--bg-surface);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .callout-hot {
+      border-left-color: var(--thermal-hot);
+    }
+
+    .callout-cold {
+      border-left-color: var(--thermal-cold);
+    }
+
+    .scenario-box {
+      background-color: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 0.85rem 0;
+    }
+
+    .scenario-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-bottom: 0.4rem;
+      color: var(--brand-light);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .gherkin-kw {
+      font-weight: 700;
+      color: var(--brand-accent);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 1.25rem 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+
+    th {
+      background-color: var(--bg-subtle);
+      color: var(--text-main);
+      padding: 0.75rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    td {
+      padding: 0.75rem 0.9rem;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      color: #95d5b2;
+      font-size: 0.88rem;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    p code, li code, td code {
+      background-color: var(--code-bg);
+      color: var(--brand-light);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-action {
+      border: 1px solid var(--border-accent);
+      background-color: var(--bg-surface);
+      color: var(--text-main);
+      border-radius: 6px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background-color: var(--brand-green);
+      color: #ffffff;
+      border-color: var(--brand-green);
+    }
+
+    .btn-primary-action {
+      background-color: var(--brand-accent);
+      color: #0b1a13 !important;
+      border-color: var(--brand-accent);
+      font-weight: 600;
+    }
+
+    .btn-primary-action:hover {
+      background-color: var(--brand-light);
+    }
+
+    @media (max-width: 991px) {
+      .docs-sidebar { display: none; }
+      .docs-content { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="topbar d-flex justify-content-between align-items-center">
+    <a href="/documentacion" class="brand-link">
+      <div class="brand-icon"><i class="bi bi-flower1"></i></div>
+      <span>Kawsapacha <small class="text-muted fw-normal" style="font-size: 0.8rem;">· MSP & EPN · V1</small></span>
+    </a>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge-pill d-none d-md-inline-flex"><i class="bi bi-calendar-event"></i> Demostración: 13-Nov-2026</span>
+      <span class="badge-pill d-none d-sm-inline-flex"><i class="bi bi-clock-history"></i> 78 Horas V1</span>
+      <a href="https://kawsapacha.ejedigital.io" class="btn-action btn-primary-action" target="_blank">
+        <i class="bi bi-box-arrow-up-right"></i> Abrir App
+      </a>
+      <a href="/DOCUMENTACION.md?raw=1" class="btn-action" title="Descargar Markdown">
+        <i class="bi bi-file-earmark-text"></i> Raw MD
+      </a>
+      <button class="btn-action" id="themeBtn" aria-label="Cambiar tema">
+        <i class="bi bi-sun" id="themeIcon"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="docs-container">
+    <!-- Sidebar Navigation -->
+    <aside class="docs-sidebar">
+      <div class="nav-group-title">Marco Institucional</div>
+      <a href="#vision" class="docs-nav-link active"><i class="bi bi-building"></i> 1. Visión y Objetivos MSP</a>
+      <a href="#matriz-hu" class="docs-nav-link"><i class="bi bi-table"></i> 2. Matriz de Historias V1</a>
+      <a href="#alcance" class="docs-nav-link"><i class="bi bi-columns-gap"></i> 3. Alcance V1 vs. V2</a>
+      <a href="#reglas" class="docs-nav-link"><i class="bi bi-journal-check"></i> 4. Reglas de Negocio MSP</a>
+      <a href="#roles-permisos" class="docs-nav-link"><i class="bi bi-shield-lock text-success"></i> 5. Roles y Permisos Granulares</a>
+
+      <div class="nav-group-title">Historias de Usuario (Gherkin)</div>
+      <a href="#hu-001" class="docs-nav-link"><i class="bi bi-person-check"></i> HU-001: Registro y Login</a>
+      <a href="#hu-002" class="docs-nav-link"><i class="bi bi-people"></i> HU-002: Comunidades</a>
+      <a href="#hu-003" class="docs-nav-link"><i class="bi bi-flower2"></i> HU-003: Catálogo Plantas</a>
+      <a href="#hu-004" class="docs-nav-link"><i class="bi bi-sliders"></i> HU-004: Configurador Suelos</a>
+      <a href="#hu-005" class="docs-nav-link"><i class="bi bi-grid-3x3"></i> HU-005: Huerto Virtual 2D</a>
+      <a href="#hu-006" class="docs-nav-link"><i class="bi bi-camera"></i> HU-006: Bitácora y Reloj Lunar</a>
+      <a href="#hu-007" class="docs-nav-link"><i class="bi bi-trophy"></i> HU-007: Gamificación & Ranking</a>
+
+      <div class="nav-group-title">Requisitos del Sistema</div>
+      <a href="#rf" class="docs-nav-link"><i class="bi bi-list-check"></i> 6. Requerimientos Funcionales</a>
+      <a href="#rnf" class="docs-nav-link"><i class="bi bi-shield-check"></i> 7. Requerimientos No Funcionales</a>
+      <a href="#equipo" class="docs-nav-link"><i class="bi bi-git"></i> 8. Ramas Git y Reparto</a>
+      <a href="#operaciones" class="docs-nav-link"><i class="bi bi-terminal"></i> 9. Comandos de Producción</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      
+      <!-- Visión y Antecedentes -->
+      <section id="vision">
+        <div class="d-flex flex-wrap gap-2 mb-2">
+          <span class="badge-pill"><i class="bi bi-award"></i> Ministerio de Salud Pública (MSP)</span>
+          <span class="badge-pill"><i class="bi bi-mortarboard"></i> Escuela Politécnica Nacional (EPN)</span>
+          <span class="badge-pill"><i class="bi bi-patch-check"></i> MAIS-FCI · Acuerdo Ministerial 244</span>
+        </div>
+        <h1>Proyecto Kawsapacha — Huertos Medicinales Comunitarios</h1>
+        <p class="lead text-muted">
+          Documento Oficial de Especificación de Requisitos y Arquitectura de Producción (Historias de Usuario HU-001 a HU-007).
+        </p>
+
+        <div class="callout">
+          <strong><i class="bi bi-info-circle-fill"></i> Concepto Central: "El Espejo Digital"</strong><br>
+          En el marco del Modelo de Atención Integral de Salud Familiar, Comunitario e Intercultural (MAIS-FCI) y el principio kichwa <em>Kawsapacha</em> (mundo vivo e inteligente), la plataforma sincroniza las labores físicas en la tierra con una representación virtual interactiva, recompensando el cuidado comunitario y garantizando equidad entre huertos de cualquier tamaño.
+        </div>
+
+        <h3>Objetivos Comerciales Medibles</h3>
+        <ul>
+          <li><strong>OB-01 (Adopción Piloto):</strong> Lograr que al menos 15 comunidades piloto registren y configuren sus huertos medicinales en los primeros 3 meses de operación.</li>
+          <li><strong>OB-02 (Cumplimiento Normativo):</strong> Alcanzar un 85% de apego a las fases del calendario lunar y lineamientos del MSP en las actividades de siembra y cosecha registradas.</li>
+          <li><strong>OB-03 (Retención y Sostenibilidad):</strong> Reducir la tasa de abandono de los huertos comunitarios en un 40% durante el primer año mediante mecánicas de gamificación equitativa (puntos, niveles y ranking proporcional).</li>
+        </ul>
+      </section>
+
+      <!-- Matriz de Historias de Usuario -->
+      <section id="matriz-hu">
+        <h2><i class="bi bi-table text-success"></i> 1. Matriz de Historias de Usuario V1 (78 Horas Totales)</h2>
+        <p>Especificación basada en principios <strong>INVEST</strong> y las 3 "C" (Tarjeta, Conversación y Confirmación):</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Título de la Historia de Usuario</th>
+              <th>Módulo / Épica</th>
+              <th>Prioridad</th>
+              <th>Horas</th>
+              <th>Trazabilidad RF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HU-001</strong></td>
+              <td>Registro, Login por Roles y Perfil Aprendiz</td>
+              <td>La Semilla</td>
+              <td><span class="badge-pill">Alta</span></td>
+              <td>10 h</td>
+              <td>RF-01, RF-02, RF-03</td>
+            </tr>
+            <tr>
+              <td><strong>HU-002</strong></td>
+              <td>Creación de Comunidad y Miembros Voluntarios</td>
+              <td>La Semilla</td>
+              <td><span class="badge-pill">Alta</span></td>
+              <td>8 h</td>
+              <td>RF-04, RF-05</td>
+            </tr>
+            <tr>
+              <td><strong>HU-003</strong></td>
+              <td>Gestión del Catálogo Oficial de Plantas MSP</td>
+              <td>La Tierra</td>
+              <td><span class="badge-pill">Alta</span></td>
+              <td>8 h</td>
+              <td>RF-08, RN-HEC-01</td>
+            </tr>
+            <tr>
+              <td><strong>HU-004</strong></td>
+              <td>Configurador Físico del Huerto y Suelos</td>
+              <td>La Tierra</td>
+              <td><span class="badge-pill">Alta</span></td>
+              <td>12 h</td>
+              <td>RF-06, RF-07, RF-09</td>
+            </tr>
+            <tr>
+              <td><strong>HU-005</strong></td>
+              <td>Asociación de Cultivos y Huerto Virtual 2D</td>
+              <td>El Reflejo</td>
+              <td><span class="badge-pill">Alta</span></td>
+              <td>12 h</td>
+              <td>RF-10, RF-15</td>
+            </tr>
+            <tr>
+              <td><strong>HU-006</strong></td>
+              <td>Bitácora Agrícola, Reloj Lunar y Evidencia</td>
+              <td>El Ciclo</td>
+              <td><span class="badge-pill">Alta</span></td>
+              <td>14 h</td>
+              <td>RF-11, RF-12, RF-13</td>
+            </tr>
+            <tr>
+              <td><strong>HU-007</strong></td>
+              <td>Validaciones, Gamificación y Ranking Justo</td>
+              <td>La Motivación</td>
+              <td><span class="badge-pill">Media/Alta</span></td>
+              <td>14 h</td>
+              <td>RF-14, RF-16, RF-17</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Alcance V1 vs V2 -->
+      <section id="alcance">
+        <h2><i class="bi bi-columns-gap text-success"></i> 2. Alcance y Estrategia de Entrega Incremental (V1 vs. V2)</h2>
+        <p>Estrategia de Proceso Unificado y Entregas Pequeñas (XP) para asegurar la línea base operativa del 13 de noviembre:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Módulo del Sistema</th>
+              <th>Versión 1 (V1 — Entrega 13 de Noviembre)</th>
+              <th>Versión 2 (V2 — Entregas Posteriores)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>FE-01: Usuarios y Comunidades ("La Semilla")</strong></td>
+              <td>Registro y autenticación por roles (Admin MSP, Maestro, Voluntario). Estructura escalable (Individual, Familiar, Condominio, Barrial). Perfil evolutivo Aprendiz (0 pts).</td>
+              <td>Certificación avanzada de saberes tradicionales. Perfiles extendidos con historial fitoterapéutico.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-02: Configurador Físico ("La Tierra")</strong></td>
+              <td>Parámetros geográficos y área (1 a 400 m²). Tipologías (Tierra, Vertical, Colgante, Piso). 6 tipos de suelo del MSP, cerca, riego y abono.</td>
+              <td>Recetario interactivo de biopreparados (purines). Mapeo de alelopatía y asociaciones contra plagas.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-03: Catálogo Oficial MSP</strong></td>
+              <td>Catálogo precargado de plantas medicinales con cualidad térmica (Cálida/Roja vs. Fría/Verde). Usos, precauciones y pisos ecológicos.</td>
+              <td>Ampliación de fichas botánicas en ultra alta resolución. Búsqueda por patologías complejas y dosificación.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-04: Reloj Agrícola ("El Ciclo")</strong></td>
+              <td>Indicador de fase lunar andina actual en tiempo real. Bitácora con foto de evidencia (JPG/PNG &le; 5 MB). Regla lunar con bonificación (1.25x vs 1.00x).</td>
+              <td>Notificaciones push automáticas en 5 franjas energéticas (05:00, 08:00, 11:00, 17:00, 23:00). Historial anual.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-05: Huerto Virtual & Gamificación</strong></td>
+              <td>Dashboard 2D matricial por cuadrículas/tarjetas: estado fenológico, cualidad térmica e íconos. Suma de puntos, niveles y Ranking Nacional Justo (PRJ).</td>
+              <td>Visualización 3D isométrica animada con WebGL. Insignias desbloqueables ("Guardián de la Semilla") y retos inter-barriales.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-06: Moderación y Validación</strong></td>
+              <td>Aprobación de huertos por Admin MSP. Validación de evidencias fotográficas por Maestro Comunitario.</td>
+              <td>Moderación comunitaria de hilos y auditorías técnicas multi-criterio.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-07: Bodega e Inventario ("El Resguardo")</strong></td>
+              <td><em>Diferido para V2 (Excluido deliberadamente de V1 para proteger la entrega).</em></td>
+              <td>Control de 3 categorías de inventario: herramientas, semillas y abonos. Trazabilidad de secado y etiquetas de 100 g. Control de stock para farmacia.</td>
+            </tr>
+            <tr>
+              <td><strong>FE-08: Foro Comunitario ("La Asamblea")</strong></td>
+              <td><em>Diferido para V2 (Excluido deliberadamente de V1 para proteger la entrega).</em></td>
+              <td>Espacio de diálogo de saberes, asamblea comunitaria virtual, difusión de ferias y trueques de semillas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Reglas de Negocio MSP -->
+      <section id="reglas">
+        <h2><i class="bi bi-journal-check text-success"></i> 3. Catálogo de Reglas de Negocio Centrales (MSP 2017)</h2>
+        <p>Provenientes de los <em>Lineamientos para la implementación de huertos medicinales en el Primer Nivel de Atención</em> (MSP, 2017):</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID / Tipo</th>
+              <th>Enunciado de la Regla de Negocio</th>
+              <th>Origen / Fuente Oficial MSP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RN-HEC-01</strong><br><small class="text-muted">Hecho (Fact)</small></td>
+              <td>Toda planta medicinal del catálogo posee una única cualidad térmica: Planta Caliente (señalética roja) o Planta Fresca/Fría (señalética verde o blanca).</td>
+              <td>MSP Lineamientos 2017 (Fase III y Anexo 5)</td>
+            </tr>
+            <tr>
+              <td><strong>RN-HEC-02</strong><br><small class="text-muted">Hecho (Fact)</small></td>
+              <td>Los suelos agrícolas se clasifican en 6 tipos: arcilloso, limoso, arenoso, margoso, gredoso y pantanoso, cada uno con especies vegetales afines.</td>
+              <td>MSP Lineamientos 2017 (Fase I, Tabla 1)</td>
+            </tr>
+            <tr>
+              <td><strong>RN-RES-01</strong><br><small class="text-muted">Restricción</small></td>
+              <td>La preparación y abonado profundo del suelo solo debe ejecutarse en Luna Oscura (Yana Killa), exigiendo 15 días de reposo antes de la siembra.</td>
+              <td>MSP Lineamientos 2017 (Fase II y Anexo 4)</td>
+            </tr>
+            <tr>
+              <td><strong>RN-RES-02</strong><br><small class="text-muted">Restricción</small></td>
+              <td>La siembra debe realizarse en Luna Creciente (Wiñak Killa) o Luna Llena (Pura Killa), preferentemente a las 08:00 AM tras el ritual de siembra.</td>
+              <td>MSP Lineamientos 2017 (Fase III y Anexo 4)</td>
+            </tr>
+            <tr>
+              <td><strong>RN-RES-03</strong><br><small class="text-muted">Restricción</small></td>
+              <td>La cosecha de hojas, flores y frutos exige Luna Creciente o Llena; la cosecha de raíces, tubérculos y semillas exige Cuarto Menguante (Wañuk Killa).</td>
+              <td>MSP Lineamientos 2017 (Fase III)</td>
+            </tr>
+            <tr>
+              <td><strong>RN-RES-04</strong><br><small class="text-muted">Restricción</small></td>
+              <td>Se prohíbe el uso de químicos sintéticos. El control de plagas debe realizarse únicamente con plantas protectoras, ceniza de fogón, cal o biopreparados.</td>
+              <td>MSP Lineamientos 2017 (Fases II y III)</td>
+            </tr>
+            <tr>
+              <td><strong>RN-HAB-01</strong><br><small class="text-muted">Habilitador</small></td>
+              <td>Si el Maestro Comunitario aprueba una evidencia fotográfica, entonces el sistema acredita inmediatamente los puntos al voluntario y actualiza el Huerto Virtual.</td>
+              <td>Definición del Proyecto ("El Reflejo")</td>
+            </tr>
+            <tr>
+              <td><strong>RN-INF-01</strong><br><small class="text-muted">Inferencia</small></td>
+              <td>Escala de progresión: 0-99 puntos &rarr; Nivel Aprendiz; 100-299 puntos &rarr; Nivel Oficial; &ge; 300 puntos &rarr; Nivel Maestro.</td>
+              <td>Definición del Proyecto ("La Semilla")</td>
+            </tr>
+            <tr>
+              <td><strong>RN-COM-01</strong><br><small class="text-muted">Cómputo</small></td>
+              <td>El Puntaje de Ranking Justo (PRJ) se calcula como: <code>PRJ = (&Sigma; Puntos Validados / Cultivos Activos) &times; Factor Lunar</code> (Factor: 1.25 en fase, 1.00 fuera de fase).</td>
+              <td>Regla de Equidad de Gamificación</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Nueva Sección: Sistema de Roles, Propiedad y Permisos Granulares -->
+      <section id="roles-permisos">
+        <h2><i class="bi bi-shield-lock text-success"></i> 5. Arquitectura de Seguridad: Dos Roles Globales, Propiedad y 11 Permisos Granulares</h2>
+        <p class="lead text-muted">
+          Kawsapacha implementa un modelo de autorización estricto basado en propiedad de recursos, invitaciones formales y separación tajante entre <strong>Roles de Seguridad</strong> y <strong>Niveles de Gamificación</strong>.
+        </p>
+
+        <div class="callout">
+          <strong><i class="bi bi-exclamation-triangle-fill text-warning"></i> Principio Fundamental de Seguridad:</strong><br>
+          En Kawsapacha existen <strong>únicamente DOS ROLES GLOBALES</strong> (<code>ADMINISTRADOR</code> y <code>USUARIO</code>). Los distintivos <em>Aprendiz</em>, <em>Oficial</em> y <em>Maestro</em> son <strong>niveles de gamificación</strong> basados en puntos acumulados por cuidar la tierra; jamás deben otorgar privilegios administrativos por sí mismos ni mutar el rol global del usuario al crear una comunidad.
+        </div>
+
+        <h3>5.1. Comparativa de los Dos Roles Globales</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Característica / Capacidad</th>
+              <th>ADMINISTRADOR (MSP / Sistema)</th>
+              <th>USUARIO (Comunitario / Voluntario)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Asignación</strong></td>
+              <td>Configurado inicialmente vía variables de entorno seguras.</td>
+              <td>Asignado automáticamente a todo ciudadano al registrarse.</td>
+            </tr>
+            <tr>
+              <td><strong>Alcance de Gestión</strong></td>
+              <td>Global: Visualiza, audita, aprueba y administra cualquier comunidad y huerto del país sin requerir invitación.</td>
+              <td>Local: Administra exclusivamente las comunidades y huertos creados bajo su propiedad (<code>ownerId</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Gestión de Integrantes</strong></td>
+              <td>Supervisión nacional, suspensión de cuentas y auditoría de accesos.</td>
+              <td>Invita, configura permisos y retira integrantes exclusivamente de sus comunidades propias.</td>
+            </tr>
+            <tr>
+              <td><strong>Catálogo Botánico MSP</strong></td>
+              <td>Crea, edita y valida fichas botánicas oficiales.</td>
+              <td>Consulta el catálogo público y filtra especies por tipo de suelo y cualidad térmica.</td>
+            </tr>
+            <tr>
+              <td><strong>Validación Sanitaria</strong></td>
+              <td>Habilita o suspende huertos (MSP) y audita labores.</td>
+              <td>Valida evidencias agrícolas en su comunidad (estrictamente no puede autovalidarse).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>5.2. Propiedad Comunitaria e Inmutabilidad</h3>
+        <p>Toda comunidad creada posee un campo inmutable <code>ownerId</code> en PostgreSQL:</p>
+        <ul>
+          <li><strong>Potestad Exclusiva del Propietario:</strong> Solo el creador de la comunidad (o el Administrador Global) tiene potestad para enviar invitaciones, asignar perfiles de acceso, modificar permisos de colaboradores, expulsar integrantes o eliminar la comunidad.</li>
+          <li><strong>Protección contra Secuestro de Comunidad:</strong> Ningún colaborador invitado (incluso con perfil avanzado) puede expulsar al propietario, invitar a terceros, alterar permisos ajenos ni transferir la propiedad.</li>
+          <li><strong>Separación Visual de Vistas:</strong> En el módulo de Comunidades, la interfaz separa nítidamente <strong>"Mis comunidades"</strong> (propiedad activa con herramientas de gestión) de <strong>"Compartidas conmigo"</strong> (vista de colaborador con insignias de permisos asignados).</li>
+        </ul>
+
+        <h3>5.3. Catálogo Oficial de los 11 Permisos Granulares</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Código del Permiso</th>
+              <th>Categoría</th>
+              <th>Nombre en Pantalla</th>
+              <th>Descripción y Alcance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>VIEW_COMMUNITY</code></td>
+              <td><span class="badge-pill">General</span></td>
+              <td>Ver comunidad</td>
+              <td>Consultar información básica, tipología y estado de la comunidad.</td>
+            </tr>
+            <tr>
+              <td><code>VIEW_GARDENS</code></td>
+              <td><span class="badge-pill">Huertos</span></td>
+              <td>Ver huertos</td>
+              <td>Acceder visualmente a los huertos medicinales vinculados a la comunidad.</td>
+            </tr>
+            <tr>
+              <td><code>CREATE_GARDENS</code></td>
+              <td><span class="badge-pill">Huertos</span></td>
+              <td>Crear huertos</td>
+              <td>Registrar nuevas parcelas y configurar su arquitectura física (tierra, vertical, etc.).</td>
+            </tr>
+            <tr>
+              <td><code>EDIT_GARDENS</code></td>
+              <td><span class="badge-pill">Huertos</span></td>
+              <td>Editar huertos</td>
+              <td>Modificar configuración física, tipo de suelo, riego y abono de huertos existentes.</td>
+            </tr>
+            <tr>
+              <td><code>MANAGE_CROPS</code></td>
+              <td><span class="badge-pill">Cultivos</span></td>
+              <td>Gestionar cultivos</td>
+              <td>Organizar casillas en la cuadrícula 2D: asignar especies botánicas, asociar y rotar.</td>
+            </tr>
+            <tr>
+              <td><code>REGISTER_ACTIVITIES</code></td>
+              <td><span class="badge-pill">Bitácora</span></td>
+              <td>Registrar actividades</td>
+              <td>Anotar labores agrícolas diarias (siembra, riego, deshierbe, cosecha) en la bitácora.</td>
+            </tr>
+            <tr>
+              <td><code>UPLOAD_EVIDENCE</code></td>
+              <td><span class="badge-pill">Bitácora</span></td>
+              <td>Subir evidencias</td>
+              <td>Adjuntar fotografías JPG/PNG reales como respaldo de la labor realizada.</td>
+            </tr>
+            <tr>
+              <td><code>VIEW_LOGS</code></td>
+              <td><span class="badge-pill">Bitácora</span></td>
+              <td>Ver bitácora</td>
+              <td>Consultar el historial cronológico y fotográfico de labores del huerto.</td>
+            </tr>
+            <tr>
+              <td><code>EDIT_OWN_ACTIVITIES</code></td>
+              <td><span class="badge-pill">Bitácora</span></td>
+              <td>Editar actividades propias</td>
+              <td>Modificar notas u observaciones de sus propias actividades antes de ser validadas.</td>
+            </tr>
+            <tr>
+              <td><code>VIEW_MEMBERS</code></td>
+              <td><span class="badge-pill">Comunidad</span></td>
+              <td>Ver integrantes</td>
+              <td>Consultar el listado de participantes y miembros colaboradores del equipo.</td>
+            </tr>
+            <tr>
+              <td><code>VIEW_STATS</code></td>
+              <td><span class="badge-pill">Métricas</span></td>
+              <td>Ver estadísticas</td>
+              <td>Acceder a métricas de rendimiento, puntos acumulados y avance del huerto.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>5.4. Perfiles Predefinidos de Invitación</h3>
+        <p>Al invitar a un nuevo colaborador, el propietario puede seleccionar un perfil con un clic o personalizar manualmente las casillas:</p>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card p-3 h-100" style="background:var(--bg-subtle); border-color:var(--border-subtle);">
+              <h5 class="text-success"><i class="bi bi-eye"></i> Solo lectura</h5>
+              <p class="small text-muted">Ideal para observadores comunitarios o pasantes.</p>
+              <ul class="small mb-0">
+                <li><code>VIEW_COMMUNITY</code></li>
+                <li><code>VIEW_GARDENS</code></li>
+                <li><code>VIEW_LOGS</code></li>
+                <li><code>VIEW_MEMBERS</code></li>
+                <li><code>VIEW_STATS</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card p-3 h-100" style="background:var(--bg-subtle); border-color:var(--border-subtle);">
+              <h5 class="text-success"><i class="bi bi-flower1"></i> Colaborador agrícola</h5>
+              <p class="small text-muted">Perfil estándar para voluntarios activos de campo.</p>
+              <ul class="small mb-0">
+                <li>Perfil Solo lectura (+)</li>
+                <li><code>REGISTER_ACTIVITIES</code></li>
+                <li><code>UPLOAD_EVIDENCE</code></li>
+                <li><code>EDIT_OWN_ACTIVITIES</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card p-3 h-100" style="background:var(--bg-subtle); border-color:var(--border-subtle);">
+              <h5 class="text-success"><i class="bi bi-gear"></i> Colaborador avanzado</h5>
+              <p class="small text-muted">Para técnicos o coordinadores agronómicos de apoyo.</p>
+              <ul class="small mb-0">
+                <li>Perfil Colaborador agrícola (+)</li>
+                <li><code>CREATE_GARDENS</code></li>
+                <li><code>EDIT_GARDENS</code></li>
+                <li><code>MANAGE_CROPS</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="mt-4">5.5. Ciclo de Vida de las Invitaciones</h3>
+        <p>Las invitaciones aseguran consentimiento mutuo y no imponen membresías forzadas:</p>
+        <ol>
+          <li><strong>Envío:</strong> El propietario introduce el correo del invitado y asigna el perfil. Se crea el registro con estado <code>PENDIENTE</code>.</li>
+          <li><strong>Notificación y Consulta:</strong> El invitado visualiza un aviso en su barra superior y un modal con los permisos ofrecidos.</li>
+          <li><strong>Resolución:</strong>
+            <ul>
+              <li><strong>Aceptar:</strong> El estado cambia a <code>ACEPTADA</code> y se crea el registro en <code>CommunityMember</code> con los permisos otorgados.</li>
+              <li><strong>Rechazar:</strong> El estado cambia a <code>RECHAZADA</code> sin generar membresía.</li>
+              <li><strong>Cancelar:</strong> El propietario puede anular una invitación antes de ser respondida (<code>CANCELADA</code>).</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>5.6. Regla Estricta Anti-Fraude: Prevención de Autovalidación</h3>
+        <div class="callout">
+          <strong><i class="bi bi-shield-x text-danger"></i> Prohibición de Autovalidación de Evidencias:</strong><br>
+          Para salvaguardar la transparencia comunitaria y la equidad en el Ranking Justo, <strong>un usuario NUNCA puede validar ni aprobar sus propias evidencias agrícolas</strong>, incluso si es el propietario de la comunidad. Las labores del propietario deben ser validadas por el Administrador Global del MSP, evitando así la inflación artificial de puntajes y niveles.
+        </div>
+
+        <h3>5.7. Registro de Auditoría Inmutable (AuditLog)</h3>
+        <p>Cada operación crítica queda registrada en la tabla <code>AuditLog</code> con identificación del usuario emisor, comunidad afectada, tipo de entidad, dirección IP remota y marca temporal ISO 8601:</p>
+        <ul>
+          <li><code>COMMUNITY_CREATED</code> / <code>COMMUNITY_DELETED</code></li>
+          <li><code>INVITATION_SENT</code> / <code>INVITATION_ACCEPTED</code> / <code>INVITATION_REJECTED</code> / <code>INVITATION_CANCELLED</code></li>
+          <li><code>PERMISSIONS_UPDATED</code> / <code>MEMBER_REMOVED</code></li>
+          <li><code>GARDEN_CREATED</code> / <code>GARDEN_UPDATED</code> / <code>GARDEN_DELETED</code> / <code>GARDEN_VALIDATED_MSP</code></li>
+          <li><code>ACTIVITY_REGISTERED</code> / <code>ACTIVITY_VALIDATED</code></li>
+          <li><code>USER_SUSPENDED</code> / <code>USER_REACTIVATED</code></li>
+        </ul>
+      </section>
+
+      <!-- Detalle HU-001 -->
+      <section id="hu-001">
+        <h2><i class="bi bi-person-check text-success"></i> HU-001: Registro, Login por Roles y Perfil Inicial</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Alta | <strong>Estimación:</strong> 10 horas | <strong>Trazabilidad:</strong> RF-01, RF-02, RF-03, RNF-02, RNF-03 | <strong>Épica:</strong> La Semilla</p>
+        
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un voluntario comunitario, quiero registrarme e iniciar sesión en la plataforma web con un formulario sencillo que me asigne automáticamente el nivel inicial de Aprendiz, para acceder a las funciones de mi rol y empezar a acumular puntos por cuidar el huerto medicinal.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Registro exitoso con nivel Aprendiz)</div>
+          <span class="gherkin-kw">Dado</span> que un ciudadano no registrado se encuentra en la pantalla de registro web,<br>
+          <span class="gherkin-kw">Cuando</span> ingresa su nombre completo, correo electrónico único, contraseña (&ge; 8 caracteres), fecha de nacimiento, género y selecciona talentos ancestrales declarados pulsando "Crear Cuenta",<br>
+          <span class="gherkin-kw">Entonces</span> el sistema cifra la contraseña con bcrypt (factor &ge; 10 rondas), guarda el usuario en la base de datos con <code>nivel = 'APRENDIZ'</code> y <code>puntos = 0</code>, y muestra su panel de bienvenida.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 2 (Ideal - Inicio de sesión y redirección por rol)</div>
+          <span class="gherkin-kw">Dado</span> que un usuario registrado se encuentra en la pantalla de inicio de sesión,<br>
+          <span class="gherkin-kw">Cuando</span> ingresa su correo y contraseña válidos,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema verifica sus credenciales, genera su sesión/token JWT y lo redirige automáticamente a la vista correspondiente a su rol (ADMIN_MSP, MAESTRO o VOLUNTARIO).
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 3 (Excepcional - Correo duplicado o acceso no autorizado)</div>
+          <span class="gherkin-kw">Dado</span> que un usuario intenta registrarse con un correo ya existente o intenta abrir una ruta exclusiva del Administrador MSP sin tener ese rol,<br>
+          <span class="gherkin-kw">Cuando</span> envía la solicitud al servidor,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema rechaza la operación mostrando "Este correo ya está registrado" o devuelve HTTP 403 Forbidden bloqueando el acceso.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (10 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Crear la migración SQL/Prisma de la tabla User con rol, nivel y puntos acumulados.</td><td>2 h</td></tr>
+            <tr><td>2</td><td>Programar en Express los endpoints <code>POST /api/auth/register</code> y <code>POST /api/auth/login</code> con bcrypt y JWT.</td><td>3 h</td></tr>
+            <tr><td>3</td><td>Diseñar en HTML5 + Bootstrap 5 las pantallas de Registro y Login con accesibilidad e iconografía clara.</td><td>3 h</td></tr>
+            <tr><td>4</td><td>Ejecutar pruebas unitarias y caso de prueba P-001 verificando cifrado y bloqueo de rutas por rol.</td><td>2 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Detalle HU-002 -->
+      <section id="hu-002">
+        <h2><i class="bi bi-people text-success"></i> HU-002: Creación de Comunidad y Vinculación de Miembros</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Alta | <strong>Estimación:</strong> 8 horas | <strong>Trazabilidad:</strong> RF-04, RF-05 | <strong>Regla:</strong> RN-HEC-02 | <strong>Épica:</strong> La Semilla</p>
+
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un maestro comunitario, quiero registrar mi comunidad de siembra (individual, familiar, condominio o barrial) y agregar a los vecinos o familiares voluntarios mediante su correo electrónico, para organizar nuestro equipo de trabajo agrícola en un mismo espacio digital.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Creación de comunidad escalable)</div>
+          <span class="gherkin-kw">Dado</span> que un usuario autenticado accede a la opción "Crear Comunidad",<br>
+          <span class="gherkin-kw">Cuando</span> ingresa un nombre único de comunidad, selecciona mediante botones grandes su tipología (INDIVIDUAL, FAMILIAR, CONDOMINIO o BARRIAL) e ingresa teléfono de contacto,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema registra la comunidad en la base de datos con <code>puntaje = 0</code>, asigna al creador como responsable (MAESTRO) y lo vincula como miembro activo.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 2 (Ideal - Vinculación de miembro voluntario)</div>
+          <span class="gherkin-kw">Dado</span> que el Maestro Comunitario visualiza el panel de su comunidad,<br>
+          <span class="gherkin-kw">Cuando</span> ingresa el correo electrónico de un usuario registrado y pulsa "Agregar Voluntario",<br>
+          <span class="gherkin-kw">Entonces</span> el sistema crea el vínculo activo en <code>CommunityMember</code> y muestra al nuevo integrante en la lista del equipo.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 3 (Excepcional - Nombre de comunidad repetido o usuario inexistente)</div>
+          <span class="gherkin-kw">Dado</span> que se intenta crear una comunidad con un nombre ya registrado o agregar un correo no registrado,<br>
+          <span class="gherkin-kw">Cuando</span> se pulsa el botón de guardado,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema detiene el registro, conserva los datos en pantalla y muestra un mensaje descriptivo indicando cómo corregir el campo.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (8 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Crear modelos Community y CommunityMember con llaves foráneas e índices hacia User.</td><td>2 h</td></tr>
+            <tr><td>2</td><td>Codificar endpoints <code>POST /api/comunidades</code> y <code>POST /api/comunidades/:id/miembros</code>.</td><td>2.5 h</td></tr>
+            <tr><td>3</td><td>Construir la vista web de "Mi Comunidad" con tarjetas seleccionables para tipo de comunidad.</td><td>2 h</td></tr>
+            <tr><td>4</td><td>Probar y depurar el flujo completo con caso de prueba P-002.</td><td>1.5 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Detalle HU-003 -->
+      <section id="hu-003">
+        <h2><i class="bi bi-flower2 text-success"></i> HU-003: Gestión y Consulta del Catálogo Oficial MSP</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Alta | <strong>Estimación:</strong> 8 horas | <strong>Trazabilidad:</strong> RF-08, RF-09 | <strong>Reglas:</strong> RN-HEC-01, RN-RES-04 | <strong>Épica:</strong> La Tierra</p>
+
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un administrador del MSP, quiero gestionar y mantener precargado el catálogo oficial de plantas medicinales con su cualidad térmica (caliente o fría), ciclo, altitud y usos, para que las comunidades consulten información fitoterapéutica validada y sin errores.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Registro y señalética térmica automática)</div>
+          <span class="gherkin-kw">Dado</span> que un Administrador del MSP accede al formulario del catálogo oficial,<br>
+          <span class="gherkin-kw">Cuando</span> registra una planta ingresando nombre científico único, nombre común, familia, altitud, ciclo (CORTO/LARGO), usos, contraindicaciones y cualidad térmica (CALIENTE o FRIA),<br>
+          <span class="gherkin-kw">Entonces</span> el sistema asigna automáticamente la señalética oficial (ROJO para caliente o VERDE para fría según RN-HEC-01) y publica la ficha.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 2 (Ideal - Consulta pública accesible por tarjetas)</div>
+          <span class="gherkin-kw">Dado</span> que cualquier visitante o voluntario abre el Catálogo de Plantas,<br>
+          <span class="gherkin-kw">Cuando</span> filtra por planta caliente o fría o busca por texto,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema muestra tarjetas visuales grandes con distintivo cromático visible, propiedades medicinales y precauciones.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 3 (Excepcional - Rango de altitud inválido o falta de nombre)</div>
+          <span class="gherkin-kw">Dado</span> que el Admin MSP intenta guardar una planta sin nombre científico o con altitud mínima mayor a la máxima,<br>
+          <span class="gherkin-kw">Cuando</span> envía el formulario,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema impide el guardado y resalta los campos que requieren corrección.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (8 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Crear tablas Plant y PlantSoil y programar el seeder inicial con plantas medicinales oficiales.</td><td>2.5 h</td></tr>
+            <tr><td>2</td><td>Programar endpoints <code>GET /api/plantas</code> (público) y <code>POST / PUT /api/plantas</code> (restringidos ADMIN_MSP).</td><td>2 h</td></tr>
+            <tr><td>3</td><td>Maquetar la galería de fichas botánicas en Bootstrap 5 con distintivos cromáticos Rojo/Verde.</td><td>2 h</td></tr>
+            <tr><td>4</td><td>Validar la carga del seeder, índices de unicidad y restricciones de rol.</td><td>1.5 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Detalle HU-004 -->
+      <section id="hu-004">
+        <h2><i class="bi bi-sliders text-success"></i> HU-004: Configurador Físico del Huerto y Recomendación por Suelo</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Alta | <strong>Estimación:</strong> 12 horas | <strong>Trazabilidad:</strong> RF-06, RF-07, RF-08, RF-10 | <strong>Reglas:</strong> RN-HEC-02, RN-RES-04 | <strong>Épica:</strong> La Tierra</p>
+
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un maestro comunitario, quiero configurar las características físicas de mi huerto (ubicación, área en m², tipología, cerca, suelo, riego y abono) mediante listas sencillas y recibir recomendación automática de plantas compatibles, para planificar la siembra en menos de 5 minutos sin equivocarme.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Configuración válida y recomendación agronómica)</div>
+          <span class="gherkin-kw">Dado</span> que un Maestro Comunitario abre el Configurador Físico del Huerto,<br>
+          <span class="gherkin-kw">Cuando</span> selecciona provincia, parroquia, orientación, coordenadas de Ecuador, área entre 1 m² y 400 m² inclusivo, tipología, cerca, tipo de suelo (ARCILLOSO, LIMOSO, ARENOSO, MARGOSO, GREDOSO, PANTANOSO), riego y abono,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema guarda el huerto en estado PENDIENTE de validación MSP y muestra inmediatamente la compatibilidad de especies botánicas para ese suelo.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 2 (Excepcional - Área fuera de límites o sin tipo de suelo)</div>
+          <span class="gherkin-kw">Dado</span> que se intenta guardar un área &le; 0 m², > 400 m² o se omite seleccionar suelo,<br>
+          <span class="gherkin-kw">Cuando</span> pulsa "Guardar Huerto",<br>
+          <span class="gherkin-kw">Entonces</span> el sistema bloquea el envío, mantiene todos los datos ya seleccionados en pantalla (RF-10) y muestra una alerta con el rango permitido.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (12 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Crear migración de tabla Garden con campos geográficos, arquitectónicos y límites matriciales.</td><td>2 h</td></tr>
+            <tr><td>2</td><td>Programar endpoints <code>POST /api/huertos</code> y consulta de huertos vinculados a comunidades.</td><td>3.5 h</td></tr>
+            <tr><td>3</td><td>Construir formulario paso a paso en Bootstrap 5 usando botones con íconos y selectores predefinidos.</td><td>4 h</td></tr>
+            <tr><td>4</td><td>Ejecutar caso de prueba P-003 comprobando valores límite de área (0, 1, 400, 401 m²).</td><td>2.5 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Detalle HU-005 -->
+      <section id="hu-005">
+        <h2><i class="bi bi-grid-3x3 text-success"></i> HU-005: Asociación de Cultivos y Huerto Virtual 2D</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Alta | <strong>Estimación:</strong> 12 horas | <strong>Trazabilidad:</strong> RF-10, RF-15, RNF-01, RNF-05 | <strong>Épica:</strong> El Reflejo</p>
+
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un miembro de la comunidad, quiero visualizar nuestro Huerto Virtual como un tablero sencillo de tarjetas 2D organizadas por cuadrícula (mostrando nombre de planta, borde rojo o verde según sea caliente o fría, etapa actual y último riego), para entender el estado de nuestras plantas desde cualquier dispositivo sin complicaciones.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Asociación de planta a casilla del tablero 2D)</div>
+          <span class="gherkin-kw">Dado</span> que el Maestro Comunitario tiene un huerto configurado,<br>
+          <span class="gherkin-kw">Cuando</span> selecciona una casilla disponible (ej. A1), elige una planta del catálogo oficial, técnica de siembra (SURCOS, TERRAZAS, CAMELLONES, RECIPIENTES) y propagación (SEMILLAS, ESTACAS, ESQUEJES, PLANTULAS),<br>
+          <span class="gherkin-kw">Entonces</span> el sistema crea el registro en <code>Crop</code> con etapa PREPARACION y renderiza la celda en el tablero 2D.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 2 (Ideal - Renderizado rápido y accesible &lt; 2.5 s)</div>
+          <span class="gherkin-kw">Dado</span> que un usuario o visitante abre el Huerto Virtual desde móvil (360px) o PC (1920px),<br>
+          <span class="gherkin-kw">Cuando</span> carga la página,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema renderiza en menos de 2.5 segundos (RNF-01) una cuadrícula responsiva con bordes cromáticos Rojo/Verde, etapa y fotos aprobadas.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 3 (Excepcional - Intento de sembrar en casilla ocupada)</div>
+          <span class="gherkin-kw">Dado</span> que la casilla A1 ya tiene un cultivo activo en el huerto,<br>
+          <span class="gherkin-kw">Cuando</span> el responsable intenta asignar otra planta en esa misma coordenada,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema impide la colisión respondiendo con HTTP 409 Conflict y solicita elegir otra casilla libre.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (12 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Crear tabla Crop vinculando Garden y Plant con código de celda único por huerto y etapa fenológica.</td><td>2 h</td></tr>
+            <tr><td>2</td><td>Programar endpoints <code>POST /api/huertos/:id/cultivos</code> y <code>GET /api/huertos/:id/virtual-grid</code>.</td><td>3 h</td></tr>
+            <tr><td>3</td><td>Construir tablero 2D responsivo con bordes cromáticos rojo/verde y barra de filtros dinámicos.</td><td>5 h</td></tr>
+            <tr><td>4</td><td>Ejecutar caso de prueba P-004 y medir tiempos de carga (&lt; 2.5 s) en móvil y escritorio.</td><td>2 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Detalle HU-006 -->
+      <section id="hu-006">
+        <h2><i class="bi bi-camera text-success"></i> HU-006: Bitácora de Actividades, Reloj Lunar y Evidencia</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Alta | <strong>Estimación:</strong> 14 horas | <strong>Trazabilidad:</strong> RF-11, RF-12, RF-13 | <strong>Reglas:</strong> RN-RES-01 a RN-RES-04 | <strong>Épica:</strong> El Ciclo</p>
+
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un voluntario comunitario, quiero ver en la parte superior de la pantalla en qué fase lunar andina estamos hoy y registrar mis tareas de preparación, siembra, riego, cuidado o cosecha subiendo una foto desde mi celular, para dejar constancia de mi trabajo y saber si cumplo el calendario ancestral del MSP.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Actividad en fase lunar óptima con factor 1.25x)</div>
+          <span class="gherkin-kw">Dado</span> que el banner del Reloj Agrícola muestra fase vigente (Wiñak Killa o Pura Killa para siembra),<br>
+          <span class="gherkin-kw">Cuando</span> el voluntario pulsa "Registrar Actividad", elige labor SIEMBRA, escribe nota y sube foto JPG/PNG &le; 5 MB,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema valida la regla RN-RES-02, guarda la actividad en estado PENDIENTE con <code>cumplimiento_lunar_optimo = true</code> e informa que recibirá bonificación 1.25x.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 2 (Alternativo Educativo - Actividad fuera de fase)</div>
+          <span class="gherkin-kw">Dado</span> que la fase actual es Yana Killa (recomendada para preparación profunda),<br>
+          <span class="gherkin-kw">Cuando</span> el voluntario registra una labor de siembra con foto válida,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema muestra una alerta educativa sobre el lineamiento del MSP y guarda con factor estándar 1.00x.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 3 (Excepcional - Archivo inválido o mayor a 5 MB)</div>
+          <span class="gherkin-kw">Dado</span> que se intenta enviar un archivo no permitido (.pdf, .exe) o una imagen > 5 MB,<br>
+          <span class="gherkin-kw">Cuando</span> se envía la solicitud,<br>
+          <span class="gherkin-kw">Entonces</span> el middleware Multer e inspección de Magic Bytes rechazan el archivo y muestran un mensaje indicando el límite.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (14 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Crear tabla Activity y configurar almacenamiento con Multer (límite 5 MB, JPG/PNG e inspección binaria).</td><td>3 h</td></tr>
+            <tr><td>2</td><td>Programar módulo lunar en <code>domain.js</code> calculando fases andinas y evaluando reglas de labor del MSP.</td><td>3.5 h</td></tr>
+            <tr><td>3</td><td>Crear endpoints <code>GET /api/reloj-lunar/actual</code> y <code>POST /api/cultivos/:id/actividades</code>.</td><td>3 h</td></tr>
+            <tr><td>4</td><td>Diseñar banner del Reloj Lunar y modal de subida con soporte directo de cámara móvil (<code>capture='environment'</code>).</td><td>2.5 h</td></tr>
+            <tr><td>5</td><td>Ejecutar y documentar caso de prueba P-005 con fotos reales, fuera de fase y archivos no admitidos.</td><td>2 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Detalle HU-007 -->
+      <section id="hu-007">
+        <h2><i class="bi bi-trophy text-success"></i> HU-007: Validaciones, Gamificación y Ranking Justo</h2>
+        <p class="text-muted mb-2"><strong>Prioridad:</strong> Media/Alta | <strong>Estimación:</strong> 14 horas | <strong>Trazabilidad:</strong> RF-14, RF-16, RF-17 | <strong>Reglas:</strong> RN-HAB-01, RN-INF-01, RN-COM-01 | <strong>Épica:</strong> La Motivación</p>
+
+        <div class="callout">
+          <strong>Narrativa:</strong> Como un maestro comunitario o administrador del MSP, quiero aprobar con un solo clic las evidencias fotográficas y los huertos registrados para que el sistema sume automáticamente puntos, actualice el nivel de los voluntarios y ordene el Ranking Nacional Justo, manteniendo motivadas a las comunidades sin importar el tamaño de su huerto.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 1 (Ideal - Aprobación de huerto por Admin MSP)</div>
+          <span class="gherkin-kw">Dado</span> que existe un huerto en estado PENDIENTE,<br>
+          <span class="gherkin-kw">Cuando</span> el Administrador MSP revisa sus datos técnicos y pulsa "Aprobar Huerto",<br>
+          <span class="gherkin-kw">Entonces</span> el sistema cambia su estado a ACTIVO, guarda marca de tiempo ISO 8601 y habilita el huerto para el Ranking Nacional.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-check-circle"></i> Escenario 2 (Ideal - Aprobación de evidencia, suma de puntos y ascenso de nivel)</div>
+          <span class="gherkin-kw">Dado</span> que un Maestro Comunitario visualiza una actividad PENDIENTE con su foto de evidencia,<br>
+          <span class="gherkin-kw">Cuando</span> pulsa el botón "Aprobar Evidencia",<br>
+          <span class="gherkin-kw">Entonces</span> el estado cambia a APROBADA, se acreditan los puntos con factor lunar (1.25x o 1.00x), se actualiza el nivel (Aprendiz 0-99, Oficial 100-299, Maestro &ge; 300) y se actualiza el PRJ del huerto.
+        </div>
+
+        <div class="scenario-box">
+          <div class="scenario-title"><i class="bi bi-exclamation-octagon"></i> Escenario 3 (Excepcional - Rechazo sin observación o intento de doble acreditación)</div>
+          <span class="gherkin-kw">Dado</span> que se intenta rechazar una labor sin escribir observación o una evidencia ya fue evaluada,<br>
+          <span class="gherkin-kw">Cuando</span> se procesa la acción,<br>
+          <span class="gherkin-kw">Entonces</span> el sistema exige motivo al rechazar y bloquea con HTTP 409 la doble evaluación protegiendo los puntajes.
+        </div>
+
+        <h4 class="mt-3">Tareas Técnicas de Implementación (14 h)</h4>
+        <table>
+          <thead><tr><th>Nro.</th><th>Descripción de la Tarea Técnica</th><th>Horas</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Programar motor de gamificación y algoritmo proporcional de Ranking Justo (PRJ).</td><td>3.5 h</td></tr>
+            <tr><td>2</td><td>Codificar endpoints transaccionales <code>PATCH /api/huertos/:id/validar-msp</code>, <code>PATCH /api/actividades/:id/validar-maestro</code> y <code>GET /api/ranking</code>.</td><td>4 h</td></tr>
+            <tr><td>3</td><td>Maquetar bandeja de aprobación con vista previa de fotos y tabla pública de Ranking Nacional.</td><td>4 h</td></tr>
+            <tr><td>4</td><td>Ejecutar casos de prueba P-006 y P-007 verificando ascenso de nivel y ordenamiento PRJ.</td><td>2.5 h</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Requerimientos Funcionales Atómicos -->
+      <section id="rf">
+        <h2><i class="bi bi-list-check text-success"></i> 4. Especificación de Requerimientos Funcionales (RF-01 a RF-17)</h2>
+        <p>Redactados formalmente bajo la directiva obligatoria <em>"El sistema deberá..."</em>:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Requerimiento Funcional (Versión 1 — 13 de Noviembre)</th>
+              <th>Módulo / HU</th>
+              <th>Prioridad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>RF-01</strong></td><td>El sistema deberá registrar cuentas de usuarios solicitando nombre, correo único, contraseña, fecha de nacimiento, género y talentos ancestrales.</td><td>FE-01 / HU-001</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-02</strong></td><td>El sistema deberá asignar automáticamente el nivel Aprendiz y 0 puntos a todo usuario al completar su registro.</td><td>FE-01 / HU-001</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-03</strong></td><td>El sistema deberá autenticar a los usuarios mediante correo y contraseña cifrada, redirigiéndolos al panel de su rol (Admin, Maestro, Voluntario).</td><td>FE-01 / HU-001</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-04</strong></td><td>El sistema deberá permitir crear comunidades de siembra especificando nombre, tipología (Individual, Familiar, Condominio, Barrial) y contacto.</td><td>FE-01 / HU-002</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-05</strong></td><td>El sistema deberá permitir al Maestro Comunitario vincular usuarios registrados como miembros voluntarios activos de su comunidad.</td><td>FE-01 / HU-002</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-06</strong></td><td>El sistema deberá registrar la configuración física del huerto capturando provincia, parroquia, coordenadas, orientación y área (1 m² a 400 m²).</td><td>FE-02 / HU-004</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-07</strong></td><td>El sistema deberá registrar la tipología arquitectónica, cerramiento, tipo de suelo (6 del MSP), riego y abono en la ficha del huerto.</td><td>FE-02 / HU-004</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-08</strong></td><td>El sistema deberá mostrar una lista recomendada de plantas medicinales del catálogo oficial compatibles con el tipo de suelo del huerto.</td><td>FE-02 / HU-004</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-09</strong></td><td>El sistema deberá permitir únicamente al Admin MSP administrar el catálogo oficial de plantas (cualidad térmica caliente/fría, ciclo, usos, fotos).</td><td>FE-03 / HU-003</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-10</strong></td><td>El sistema deberá permitir asociar plantas del catálogo a secciones de la cuadrícula 2D del huerto indicando técnica de siembra y propagación.</td><td>FE-03 / HU-005</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-11</strong></td><td>El sistema deberá calcular y mostrar la fase lunar andina vigente (Yana Killa, Wiñak Killa, Pura Killa, Wañuk Killa) y sus labores.</td><td>FE-04 / HU-006</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-12</strong></td><td>El sistema deberá permitir registrar bitácoras de actividades agrícolas adjuntando una foto de evidencia en JPG/PNG de hasta 5 MB.</td><td>FE-04 / HU-006</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-13</strong></td><td>El sistema deberá evaluar automáticamente si la actividad coincide con la fase lunar recomendada, marcándola con cumplimiento óptimo (1.25x).</td><td>FE-04 / HU-006</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-14</strong></td><td>El sistema deberá permitir al Maestro Comunitario aprobar o rechazar con observación obligatoria las evidencias fotográficas de sus voluntarios.</td><td>FE-06 / HU-007</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-15</strong></td><td>El sistema deberá renderizar un Dashboard 2D interactivo con tarjetas de cultivos, color térmico (rojo/verde) y fotos aprobadas.</td><td>FE-05 / HU-005</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-16</strong></td><td>El sistema deberá sumar puntos y actualizar el nivel de experiencia del voluntario (Aprendiz &rarr; Oficial &rarr; Maestro) al aprobarse evidencias.</td><td>FE-05 / HU-007</td><td><span class="badge-pill">Alta</span></td></tr>
+            <tr><td><strong>RF-17</strong></td><td>El sistema deberá calcular y publicar el Ranking Nacional Justo (PRJ) para huertos activos en igualdad de condiciones.</td><td>FE-05 / HU-007</td><td><span class="badge-pill">Alta</span></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Requerimientos No Funcionales -->
+      <section id="rnf">
+        <h2><i class="bi bi-shield-check text-success"></i> 5. Requerimientos No Funcionales (Verificables)</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID / Atributo</th>
+              <th>Especificación Cuantificada y Verificable</th>
+              <th>Criterio de Verificación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RNF-01</strong><br><small class="text-muted">Rendimiento</small></td>
+              <td>El Dashboard 2D y el Ranking Nacional deberán cargar en un tiempo máximo de <strong>2.5 segundos inclusivo</strong> bajo carga de 50 usuarios concurrentes.</td>
+              <td>Pruebas de carga automatizadas con JMeter / K6.</td>
+            </tr>
+            <tr>
+              <td><strong>RNF-02</strong><br><small class="text-muted">Seguridad</small></td>
+              <td>Las contraseñas de usuarios deberán almacenarse cifradas con el algoritmo bcrypt con un factor de costo mínimo de <strong>10 rondas inclusivo</strong>.</td>
+              <td>Inspección de base de datos y pruebas de autenticación.</td>
+            </tr>
+            <tr>
+              <td><strong>RNF-03</strong><br><small class="text-muted">Control Acceso</small></td>
+              <td>El sistema deberá restringir rutas mediante tokens JWT devolviendo <strong>HTTP 403 Forbidden en el 100%</strong> de accesos no autorizados por rol.</td>
+              <td>Pruebas automatizadas de API en servidor.</td>
+            </tr>
+            <tr>
+              <td><strong>RNF-04</strong><br><small class="text-muted">Usabilidad</small></td>
+              <td>Un usuario nuevo deberá completar la configuración del huerto en un máximo de <strong>5 minutos inclusivo</strong> gracias a selectores guiados.</td>
+              <td>Pruebas de usabilidad cronometradas con usuarios reales.</td>
+            </tr>
+            <tr>
+              <td><strong>RNF-05</strong><br><small class="text-muted">Portabilidad</small></td>
+              <td>La interfaz web deberá ser totalmente responsiva adaptándose a pantallas desde <strong>360 px hasta 1920 px</strong> de ancho inclusivo.</td>
+              <td>Validación multiplataforma en navegadores móviles y PC.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Reparto Git -->
+      <section id="equipo">
+        <h2><i class="bi bi-git text-success"></i> 6. Organización de Ramas Git y Reparto de Tareas</h2>
+        <p>Gracias al principio <em>Independent</em> de INVEST y a un esquema unificado en PostgreSQL, el equipo trabaja en paralelo en ramas separadas de GitHub:</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Módulo / Pareja</th>
+              <th>Historias Asignadas</th>
+              <th>Enfoque Técnico en Código</th>
+              <th>Rama Git</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pareja 1 ("La Semilla")</strong></td>
+              <td>HU-001, HU-002</td>
+              <td>Autenticación bcrypt/JWT, perfiles de usuario y gestión de comunidades.</td>
+              <td><code>feature/la-semilla</code></td>
+            </tr>
+            <tr>
+              <td><strong>Pareja 2 ("La Tierra")</strong></td>
+              <td>HU-003, HU-004</td>
+              <td>Catálogo oficial MSP (seeder), configurador físico y filtro por tipo de suelo.</td>
+              <td><code>feature/la-tierra</code></td>
+            </tr>
+            <tr>
+              <td><strong>Pareja 3 ("El Reflejo y Ciclo")</strong></td>
+              <td>HU-005, HU-006</td>
+              <td>Tablero 2D (tarjetas rojas/verdes), Reloj Lunar y subida de fotos (Multer).</td>
+              <td><code>feature/el-reflejo-ciclo</code></td>
+            </tr>
+            <tr>
+              <td><strong>Pareja 4 ("La Motivación")</strong></td>
+              <td>HU-007</td>
+              <td>Bandeja de aprobación MSP/Maestro, motor de gamificación y Ranking Público.</td>
+              <td><code>feature/la-motivacion</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Comandos de Operación -->
+      <section id="operaciones">
+        <h2><i class="bi bi-terminal text-success"></i> 7. Manual de Comandos en el VPS</h2>
+        <p>Ejecutar siempre dentro del directorio del proyecto en el servidor:</p>
+
+        <pre><code># Directorio de trabajo
+cd /root/kawsapacha-mvp
+
+# 1. Consultar estado y salud de los contenedores
+docker compose ps
+
+# 2. Monitorear logs del backend en tiempo real
+docker compose logs -f app
+
+# 3. Monitorear logs de la base de datos PostgreSQL
+docker compose logs -f db
+
+# 4. Reinicio seguro de la aplicación Node.js
+docker compose restart app
+
+# 5. Generar respaldo SQL de PostgreSQL (chmod 600)
+bash scripts/copia-seguridad.sh
+
+# 6. Ejecutar suite de pruebas End-to-End bajo HTTPS
+node tests/test_production_e2e.mjs</code></pre>
+      </section>
+
+      <footer class="mt-5 pt-4 border-top text-muted d-flex justify-content-between align-items-center">
+        <span>Kawsapacha V1 · Ministerio de Salud Pública del Ecuador & Escuela Politécnica Nacional</span>
+        <span>Producción: <a href="https://kawsapacha.ejedigital.io" target="_blank" style="color: var(--brand-accent);">kawsapacha.ejedigital.io</a></span>
+      </footer>
+
+    </main>
+  </div>
+
+  <script>
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const currentTheme = localStorage.getItem('kawsapacha_doc_theme') || 'dark';
+    
+    function applyTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem('kawsapacha_doc_theme', theme);
+      if (theme === 'dark') {
+        themeIcon.className = 'bi bi-sun';
+      } else {
+        themeIcon.className = 'bi bi-moon-stars';
+      }
+    }
+
+    applyTheme(currentTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+    });
+
+    const links = document.querySelectorAll('.docs-nav-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      document.querySelectorAll('section').forEach(section => {
+        const top = section.offsetTop - 100;
+        if (window.scrollY >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMINISTRADOR
+  USUARIO
+}
+
+enum Level {
+  APRENDIZ
+  OFICIAL
+  MAESTRO
+}
+
+enum CommunityType {
+  INDIVIDUAL
+  FAMILIAR
+  CONDOMINIO
+  BARRIAL
+}
+
+enum Thermal {
+  CALIENTE
+  FRIA
+}
+
+enum GardenStatus {
+  PENDIENTE
+  ACTIVO
+  OBSERVADO
+}
+
+enum CropStage {
+  PREPARACION
+  SIEMBRA
+  CRECIMIENTO
+  COSECHA
+}
+
+enum ActivityStatus {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+}
+
+enum TaskType {
+  PREPARACION
+  SIEMBRA
+  RIEGO
+  CUIDADO
+  COSECHA
+}
+
+enum InvitationStatus {
+  PENDIENTE
+  ACEPTADA
+  RECHAZADA
+  CANCELADA
+}
+
+model User {
+  id                  String                @id @default(cuid())
+  name                String
+  email               String                @unique
+  password            String
+  birthDate           DateTime?
+  gender              String?
+  talents             String?
+  role                Role                  @default(USUARIO)
+  level               Level                 @default(APRENDIZ)
+  points              Float                 @default(0)
+  suspended           Boolean               @default(false)
+  createdAt           DateTime              @default(now())
+  communities         CommunityMember[]
+  ownedCommunities    Community[]           @relation("CommunityOwner")
+  createdGardens      Garden[]              @relation("GardenCreator")
+  sentInvitations     CommunityInvitation[] @relation("SentInvitations")
+  receivedInvitations CommunityInvitation[] @relation("ReceivedInvitations")
+  activities          Activity[]            @relation("Volunteer")
+  reviews             Activity[]            @relation("Reviewer")
+  auditLogs           AuditLog[]
+  userTalents         UserTalent[]          @relation("UserTalents")
+  reviewedTalents     UserTalent[]          @relation("TalentReviewer")
+  userChallenges      UserChallenge[]
+  forumPosts          ForumPost[]
+  forumComments       ForumComment[]
+  inventoryMovements  InventoryMovement[]
+  dryingBatches       DryingBatch[]
+}
+
+model Community {
+  id          String                @id @default(cuid())
+  name        String                @unique
+  type        CommunityType
+  phone       String?
+  description String?
+  ownerId     String
+  owner       User                  @relation("CommunityOwner", fields: [ownerId], references: [id])
+  createdAt   DateTime              @default(now())
+  members     CommunityMember[]
+  invitations CommunityInvitation[]
+  gardens     Garden[]
+  auditLogs   AuditLog[]
+  forumPosts  ForumPost[]
+  inventoryItems InventoryItem[]
+  dryingBatches  DryingBatch[]
+}
+
+model CommunityMember {
+  id          String    @id @default(cuid())
+  userId      String
+  communityId String
+  status      String    @default("ACTIVO")
+  permissions String[]  @default([])
+  joinedAt    DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  community   Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, communityId])
+  @@index([communityId])
+  @@index([userId])
+}
+
+model CommunityInvitation {
+  id            String           @id @default(cuid())
+  communityId   String
+  community     Community        @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  senderId      String
+  sender        User             @relation("SentInvitations", fields: [senderId], references: [id])
+  invitedEmail  String
+  invitedUserId String?
+  invitedUser   User?            @relation("ReceivedInvitations", fields: [invitedUserId], references: [id])
+  permissions   String[]         @default([])
+  status        InvitationStatus @default(PENDIENTE)
+  createdAt     DateTime         @default(now())
+  respondedAt   DateTime?
+
+  @@index([communityId, status])
+  @@index([invitedEmail, status])
+  @@index([invitedUserId, status])
+}
+
+model AuditLog {
+  id          String     @id @default(cuid())
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  communityId String?
+  community   Community? @relation(fields: [communityId], references: [id], onDelete: SetNull)
+  action      String
+  entityType  String
+  entityId    String?
+  details     String?
+  ipAddress   String?
+  createdAt   DateTime   @default(now())
+
+  @@index([communityId])
+  @@index([userId])
+  @@index([action])
+}
+
+model Plant {
+  id                  String      @id @default(cuid())
+  commonName          String
+  scientific          String      @unique
+  family              String?
+  uses                String?
+  cautions            String?
+  botanicalNotes      String?
+  minAltitude         Int?
+  maxAltitude         Int?
+  cycle               String      @default("CORTO")
+  thermal             Thermal
+  imageUrl            String?
+  imageThumbUrl       String?
+  imageAttribution    String?
+  imageLicense        String?
+  imageSource         String?
+  verified            Boolean     @default(false)
+  harvestPart         String?
+  harvestStage        String?
+  harvestConditions   String?
+  harvestTechnique    String?
+  harvestCautions     String?
+  harvestConservation String?
+  harvestSource       String?
+  soils               PlantSoil[]
+  crops               Crop[]
+  dryingBatches       DryingBatch[]
+  createdAt           DateTime    @default(now())
+}
+
+model PlantSoil {
+  plantId String
+  soil    String
+  plant   Plant  @relation(fields: [plantId], references: [id], onDelete: Cascade)
+
+  @@id([plantId, soil])
+}
+
+model Garden {
+  id           String       @id @default(cuid())
+  name         String
+  communityId  String
+  createdById  String?
+  createdBy    User?        @relation("GardenCreator", fields: [createdById], references: [id])
+  province     String
+  parish       String
+  latitude     Float
+  longitude    Float
+  orientation  String
+  area         Float
+  architecture String
+  fence        String
+  soil         String
+  irrigation   String
+  fertilizer   String
+  rows         Int          @default(3)
+  cols         Int          @default(4)
+  description  String?
+  status       GardenStatus @default(PENDIENTE)
+  observations String?
+  validatedAt  DateTime?
+  createdAt    DateTime     @default(now())
+  community    Community    @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  crops        Crop[]
+
+  @@index([communityId])
+}
+
+model Crop {
+  id            String        @id @default(cuid())
+  gardenId      String
+  plantId       String
+  cell          String
+  technique     String
+  propagation   String
+  stage         CropStage     @default(PREPARACION)
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
+  garden        Garden        @relation(fields: [gardenId], references: [id], onDelete: Cascade)
+  plant         Plant         @relation(fields: [plantId], references: [id])
+  activities    Activity[]
+  dryingBatches DryingBatch[]
+
+  @@unique([gardenId, cell])
+}
+
+model Activity {
+  id              String         @id @default(cuid())
+  cropId          String
+  volunteerId     String
+  reviewedById    String?
+  task            TaskType
+  irrigationType  String?
+  harvestPart     String?
+  harvestQuantity Float?
+  harvestUnit     String?
+  note            String
+  imageName       String
+  phase           String
+  lunarOptimal    Boolean
+  factor          Float          @default(1)
+  pointsAwarded   Float          @default(0)
+  status          ActivityStatus @default(PENDIENTE)
+  reviewNote      String?
+  createdAt       DateTime       @default(now())
+  reviewedAt      DateTime?
+  updatedAt       DateTime       @default(now()) @updatedAt
+  crop            Crop           @relation(fields: [cropId], references: [id], onDelete: Cascade)
+  volunteer       User           @relation("Volunteer", fields: [volunteerId], references: [id])
+  reviewedBy      User?          @relation("Reviewer", fields: [reviewedById], references: [id])
+
+  @@index([cropId])
+  @@index([volunteerId])
+}
+
+model UserTalent {
+  id           String    @id @default(cuid())
+  userId       String
+  user         User      @relation("UserTalents", fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  category     String
+  description  String
+  experience   String
+  evidenceUrl  String?
+  status       String    @default("DECLARADO")
+  reviewedById String?
+  reviewedBy   User?     @relation("TalentReviewer", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+  reviewNote   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Challenge {
+  id           String          @id @default(cuid())
+  title        String
+  description  String
+  category     String          @default("ACTIVIDADES")
+  targetType   String
+  targetCount  Int             @default(1)
+  pointsReward Float           @default(10)
+  startDate    DateTime        @default(now())
+  endDate      DateTime
+  active       Boolean         @default(true)
+  createdAt    DateTime        @default(now())
+  userProgress UserChallenge[]
+
+  @@index([active])
+}
+
+model UserChallenge {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challengeId   String
+  challenge     Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  progress      Int       @default(0)
+  completed     Boolean   @default(false)
+  completedAt   DateTime?
+  rewardClaimed Boolean   @default(false)
+  claimedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+
+  @@unique([userId, challengeId])
+  @@index([userId])
+  @@index([challengeId])
+}
+
+model ForumCategory {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  description String?
+  icon        String?
+  sortOrder   Int         @default(0)
+  posts       ForumPost[]
+}
+
+model ForumPost {
+  id          String         @id @default(cuid())
+  authorId    String
+  author      User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    ForumCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  communityId String?
+  community   Community?     @relation(fields: [communityId], references: [id], onDelete: SetNull)
+  title       String
+  content     String
+  pinned      Boolean        @default(false)
+  closed      Boolean        @default(false)
+  views       Int            @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @default(now()) @updatedAt
+  comments    ForumComment[]
+
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([communityId])
+}
+
+model ForumComment {
+  id        String    @id @default(cuid())
+  postId    String
+  post      ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+
+  @@index([postId])
+  @@index([authorId])
+}
+
+model InventoryItem {
+  id          String              @id @default(cuid())
+  communityId String
+  community   Community           @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  name        String
+  category    String
+  unit        String
+  quantity    Float               @default(0)
+  minQuantity Float               @default(0)
+  location    String?
+  description String?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @default(now()) @updatedAt
+  movements   InventoryMovement[]
+
+  @@index([communityId, category])
+}
+
+model InventoryMovement {
+  id                String        @id @default(cuid())
+  itemId            String
+  item              InventoryItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  type              String
+  quantity          Float
+  balanceAfter      Float
+  reason            String
+  responsibleUserId String
+  responsibleUser   User          @relation(fields: [responsibleUserId], references: [id])
+  createdAt         DateTime      @default(now())
+
+  @@index([itemId])
+}
+
+model DryingBatch {
+  id                 String    @id @default(cuid())
+  communityId        String
+  community          Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  plantId            String
+  plant              Plant     @relation(fields: [plantId], references: [id])
+  cropId             String?
+  crop               Crop?     @relation(fields: [cropId], references: [id], onDelete: SetNull)
+  lotNumber          String    @unique
+  harvestDate        DateTime
+  dryingStartDate    DateTime
+  dryingEndDate      DateTime?
+  initialWeightGrams Float?
+  dryWeightGrams     Float?
+  status             String    @default("EN_SECADO")
+  conditions         String?
+  notes              String?
+  responsibleUserId  String
+  responsibleUser    User      @relation(fields: [responsibleUserId], references: [id])
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @default(now()) @updatedAt
+
+  @@index([communityId])
+  @@index([plantId])
+  @@index([lotNumber])
+}

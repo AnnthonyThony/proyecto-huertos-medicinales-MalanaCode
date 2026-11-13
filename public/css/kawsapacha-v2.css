@@ -1,0 +1,3797 @@
+/* ==========================================================================
+   KAWSAPACHA V1 INTEGRAL — LANDING EDITORIAL, HUERTO REALISTA 2D, CATÁLOGO Y TEMA OSCURO
+   ========================================================================== */
+
+:root {
+  --paper: #fcfbf8;
+  --surface: #ffffff;
+  --surface-soft: #f4f6f1;
+  --ink: #173d31;
+  --ink-muted: #5c7468;
+  --line: rgba(23, 61, 49, 0.12);
+  --forest: #173d31;
+  --forest-dark: #102b20;
+  --earth-dark: #2c241b;
+  --earth-soil: #3f3124;
+  --earth-warm: #8c6a43;
+  --sage: #548566;
+  --sage-soft: #e6efe3;
+  --hot-border: #c45746;
+  --cold-border: #48865f;
+  --harvest-gold: #c99a3e;
+  --sb-track: rgba(23, 61, 49, 0.08);
+  --sb-thumb: rgba(45, 97, 80, 0.36);
+  --sb-thumb-hover: rgba(23, 61, 49, 0.58);
+}
+
+html[data-theme="dark"] {
+  --paper: #122119;
+  --surface: #172a21;
+  --surface-soft: #1c3328;
+  --ink: #eef3ee;
+  --ink-muted: #95ada1;
+  --line: rgba(255, 255, 255, 0.1);
+  --forest: #72cca2;
+  --forest-dark: #122119;
+  --sb-track: rgba(255, 255, 255, 0.06);
+  --sb-thumb: rgba(158, 197, 159, 0.32);
+  --sb-thumb-hover: rgba(158, 197, 159, 0.56);
+}
+
+/* Scrollbars personalizados coherentes en todo el sistema (claro y oscuro) */
+html,
+body,
+.sidebar,
+#appModal .modal-body,
+.garden-matrix-scroll,
+.table-responsive,
+.kp-plant-picker-list,
+textarea,
+select[multiple] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb) var(--sb-track);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+#appModal .modal-body::-webkit-scrollbar,
+.garden-matrix-scroll::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar,
+.kp-plant-picker-list::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track,
+#appModal .modal-body::-webkit-scrollbar-track,
+.garden-matrix-scroll::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track,
+.kp-plant-picker-list::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track {
+  background: var(--sb-track);
+  border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb,
+#appModal .modal-body::-webkit-scrollbar-thumb,
+.garden-matrix-scroll::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb,
+.kp-plant-picker-list::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover,
+#appModal .modal-body::-webkit-scrollbar-thumb:hover,
+.garden-matrix-scroll::-webkit-scrollbar-thumb:hover,
+.table-responsive::-webkit-scrollbar-thumb:hover,
+.kp-plant-picker-list::-webkit-scrollbar-thumb:hover,
+textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-hover);
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+}
+
+.sidebar {
+  scrollbar-color: rgba(213, 226, 184, 0.34) rgba(255, 255, 255, 0.06);
+}
+
+/* Prevención global de desbordamiento horizontal sin romper position: sticky */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+.sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* --------------------------------------------------------------------------
+   1. LANDING PAGE EDITORIAL PROFESIONAL
+   -------------------------------------------------------------------------- */
+.public-nav {
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.public-nav-links a {
+  font-weight: 500;
+  position: relative;
+  padding: 4px 0;
+}
+
+.public-nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: #d5e2b8;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+.public-nav-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.landing-hero {
+  background: radial-gradient(circle at 82% 18%, rgba(84, 133, 102, 0.26), transparent 46%), var(--forest);
+  color: #f4f7f1;
+  padding: 58px 0 84px;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 44px;
+  align-items: center;
+}
+
+.landing-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(224, 231, 201, 0.14);
+  border: 1px solid rgba(224, 231, 201, 0.28);
+  color: #e2ebd0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.landing-hero h1 {
+  font-family: Georgia, "Palatino Linotype", serif;
+  font-size: clamp(36px, 4.6vw, 62px);
+  line-height: 1.07;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  margin: 0 0 18px;
+  color: #ffffff;
+}
+
+.landing-hero h1 em {
+  color: #cde0b6;
+  font-style: italic;
+}
+
+.landing-hero-lead {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #d0dfd4;
+  max-width: 530px;
+  margin: 0 0 26px;
+}
+
+.landing-hero-visual {
+  position: relative;
+}
+
+.landing-photo-frame {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 28px 70px rgba(7, 22, 16, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  aspect-ratio: 16 / 10;
+  background: #133126;
+}
+
+.landing-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.landing-mirror-card {
+  position: absolute;
+  left: -22px;
+  bottom: -22px;
+  z-index: 4;
+  background: #f7f8f3;
+  color: #173d31;
+  border: 1px solid rgba(23, 61, 49, 0.18);
+  border-radius: 14px;
+  padding: 12px 14px;
+  width: 245px;
+  box-shadow: 0 18px 40px rgba(8, 24, 18, 0.34);
+}
+
+.landing-mirror-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.landing-mirror-cell {
+  border-radius: 6px;
+  background: #3d2f22 url("/assets/terrain/soil-prepared.webp") center/cover;
+  height: 44px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.landing-mirror-cell img {
+  height: 34px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.45));
+}
+
+.landing-mirror-cell span {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 8px;
+  font-weight: 700;
+  color: #f3f1e8;
+  text-shadow: 0 1px 2px #000;
+}
+
+/* 5.2 Cómo funciona — escena narrativa conectada al scroll */
+.journey-storyboard {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 34px;
+  align-items: start;
+  margin-top: 28px;
+}
+.journey-stage-col {
+  position: sticky;
+  top: 96px;
+}
+.journey-visual-stage {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 18px 46px rgba(18, 43, 33, 0.08);
+}
+.journey-stage-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.journey-stage-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--forest);
+  background: var(--sage-soft);
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+.journey-step-dots {
+  display: flex;
+  gap: 5px;
+}
+.journey-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--cream);
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+.journey-dot.active {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #ffffff;
+}
+.journey-scene-frame {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid #59442f;
+  padding: 14px;
+  min-height: 290px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #2f2419;
+}
+.journey-soil-layer {
+  z-index: 0;
+  filter: brightness(0.92);
+}
+.journey-scene-overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  justify-content: space-between;
+}
+.journey-blueprint-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.journey-mini-plot {
+  position: relative;
+  border-radius: 9px;
+  height: 82px;
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  background: rgba(34, 26, 19, 0.72);
+  display: grid;
+  place-items: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.journey-plot-soil {
+  position: absolute;
+  inset: 0;
+  background: #3d2f22 url("/assets/terrain/soil-prepared.webp") center/cover no-repeat;
+  opacity: 0.38;
+  transition: opacity 0.35s ease;
+}
+.journey-plot-coord {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #f3f1e8;
+  background: rgba(16, 26, 20, 0.72);
+  padding: 1px 5px;
+  border-radius: 999px;
+  z-index: 3;
+}
+.journey-plot-plant {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+.journey-plot-plant img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  max-width: 52px;
+  max-height: 52px;
+  object-fit: contain;
+  transition: transform 0.42s cubic-bezier(.2,.7,.3,1), opacity 0.32s ease;
+}
+.journey-plot-plant .parcel-sprout-img {
+  max-width: 34px;
+  max-height: 34px;
+  opacity: 0;
+  transform: scale(0.4) translateY(6px);
+}
+.journey-plot-plant .parcel-plant-img {
+  opacity: 0;
+  transform: scale(0.45) translateY(8px);
+}
+
+/* Evolución progresiva de los 6 pasos manteniendo la tierra fija */
+.journey-visual-stage[data-active-step="1"] .journey-mini-plot {
+  border-style: dashed;
+  border-color: rgba(213, 226, 184, 0.45);
+}
+.journey-visual-stage[data-active-step="2"] .journey-mini-plot[data-thermal="CALIENTE"] {
+  border-color: rgba(212, 107, 87, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(212, 107, 87, 0.45);
+}
+.journey-visual-stage[data-active-step="2"] .journey-mini-plot[data-thermal="FRIA"] {
+  border-color: rgba(106, 181, 128, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(106, 181, 128, 0.45);
+}
+.journey-visual-stage[data-active-step="2"] .journey-plot-soil { opacity: 0.65; }
+.journey-visual-stage[data-active-step="3"] .journey-plot-soil,
+.journey-visual-stage[data-active-step="4"] .journey-plot-soil,
+.journey-visual-stage[data-active-step="5"] .journey-plot-soil,
+.journey-visual-stage[data-active-step="6"] .journey-plot-soil {
+  opacity: 1;
+}
+.journey-visual-stage[data-active-step="4"] .journey-plot-plant .parcel-sprout-img {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.journey-visual-stage[data-active-step="5"] .journey-plot-plant .parcel-plant-img {
+  opacity: 0.96;
+  transform: scale(0.76) translateY(3px);
+}
+.journey-visual-stage[data-active-step="6"] .journey-plot-plant .parcel-plant-img {
+  opacity: 1;
+  transform: scale(1.04) translateY(0);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55));
+}
+.journey-visual-stage[data-active-step="6"] .journey-mini-plot {
+  border-color: rgba(217, 178, 92, 0.85);
+}
+
+.journey-context-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  background: rgba(18, 29, 23, 0.88);
+  color: #f3f6ef;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+}
+.journey-context-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(213, 226, 184, 0.16);
+  color: #d7e6be;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.journey-context-card strong {
+  display: block;
+  font-size: 13px;
+  color: #ffffff;
+}
+.journey-context-card span {
+  display: block;
+  font-size: 11px;
+  color: #c9d9cc;
+}
+
+.journey-steps-track {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding-left: 24px;
+}
+.journey-rail {
+  position: absolute;
+  left: 6px;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+.journey-rail-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, var(--sage), var(--forest));
+  transform-origin: top center;
+}
+
+.journey-step {
+  position: relative;
+  padding: 18px 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.journey-step::before {
+  content: "";
+  position: absolute;
+  left: -23px;
+  top: 24px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2.5px solid var(--line);
+  transition: all 0.25s ease;
+}
+.journey-step.is-active {
+  border-color: var(--forest);
+  background: linear-gradient(155deg, #f3f7ef, #ffffff);
+  box-shadow: 0 14px 32px rgba(23, 61, 49, 0.08);
+}
+.journey-step.is-active::before {
+  background: var(--forest);
+  border-color: var(--forest);
+  transform: scale(1.2);
+}
+
+.journey-step-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.journey-num {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--earth-warm);
+  font-weight: 400;
+}
+
+.journey-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--sage-soft);
+  color: var(--forest);
+  font-size: 16px;
+}
+
+.journey-step h3 {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  margin: 2px 0 0;
+  color: var(--forest);
+}
+
+.journey-step p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+
+/* Capa de tierra permanente compartida por Showcase y Huerto 2D */
+.parcel-soil-layer {
+  position: absolute;
+  inset: 0;
+  background: #3d2f22 url("/assets/terrain/soil-prepared.webp") center/cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.36);
+}
+
+/* 5.3 Showcase Huerto Virtual interactivo en Landing */
+.landing-showcase-band {
+  background: color-mix(in srgb, var(--surface-soft) 72%, var(--cream));
+  border-block: 1px solid var(--line);
+  padding: 64px 0;
+}
+
+.showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 36px;
+  align-items: center;
+}
+
+.stage-pill-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 12px;
+}
+
+.stage-pill-btn {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.stage-pill-btn.active {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #ffffff;
+}
+.stage-caption-live {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--forest);
+  margin: 0 0 8px;
+  min-height: 20px;
+}
+
+.demo-garden-board {
+  background: url("/assets/terrain/paths-borders.webp") center/cover;
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: 0 22px 54px rgba(18, 43, 33, 0.18);
+  border: 2px solid #59442f;
+}
+
+.demo-garden-inner {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  background: rgba(34, 26, 19, 0.72);
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.demo-parcel {
+  position: relative;
+  border-radius: 10px;
+  min-height: 126px;
+  background: #3d2f22;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px;
+  overflow: hidden;
+  transition: border-color 0.28s ease;
+}
+.demo-parcel[data-thermal="CALIENTE"] { border-color: rgba(196, 87, 70, 0.85); }
+.demo-parcel[data-thermal="FRIA"] { border-color: rgba(72, 134, 95, 0.85); }
+.demo-parcel-top {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.demo-parcel-coord {
+  font-size: 10px;
+  font-weight: 700;
+  color: #f4f1e6;
+  background: rgba(18, 25, 20, 0.72);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.demo-parcel-plant {
+  position: relative;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+}
+
+.demo-parcel-plant img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  max-height: 64px;
+  max-width: 86%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.55));
+  transition: transform 0.45s cubic-bezier(.2, .7, .3, 1), opacity 0.35s ease;
+  pointer-events: none;
+}
+.demo-parcel-plant .parcel-sprout-img {
+  max-height: 44px;
+}
+/* Exclusivamente la capa vegetal cambia según etapa; la tierra inferior permanece intacta */
+.demo-parcel[data-stage="PREPARACION"] .parcel-sprout-img,
+.demo-parcel[data-stage="PREPARACION"] .parcel-plant-img {
+  opacity: 0;
+  transform: scale(0.4) translateY(8px);
+}
+.demo-parcel[data-stage="SIEMBRA"] .parcel-sprout-img {
+  opacity: 1;
+  transform: scale(0.96) translateY(0);
+}
+.demo-parcel[data-stage="SIEMBRA"] .parcel-plant-img {
+  opacity: 0;
+  transform: scale(0.45) translateY(8px);
+}
+.demo-parcel[data-stage="CRECIMIENTO"] .parcel-sprout-img {
+  opacity: 0;
+  transform: scale(0.75);
+}
+.demo-parcel[data-stage="CRECIMIENTO"] .parcel-plant-img {
+  opacity: 0.96;
+  transform: scale(0.78) translateY(3px);
+}
+.demo-parcel[data-stage="COSECHA"] .parcel-sprout-img {
+  opacity: 0;
+}
+.demo-parcel[data-stage="COSECHA"] .parcel-plant-img {
+  opacity: 1;
+  transform: scale(1.06) translateY(-1px);
+}
+.demo-parcel-label {
+  position: relative;
+  font-size: 10px;
+  font-weight: 700;
+  color: #f8f6ee;
+  background: rgba(16, 28, 22, 0.8);
+  padding: 3px 7px;
+  border-radius: 6px;
+  text-align: center;
+  z-index: 3;
+}
+
+.typology-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.typology-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.typology-card img {
+  width: 100%;
+  height: 128px;
+  object-fit: cover;
+  display: block;
+}
+
+.typology-card div {
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.typology-card strong {
+  display: block;
+  color: var(--forest);
+  margin-bottom: 2px;
+}
+
+.typology-card span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* 5.4 Galería botánica diferenciada en Landing */
+.botanical-showcase-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 20px;
+  align-items: stretch;
+}
+.botanical-spotlight {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  padding: 22px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: radial-gradient(circle at 24% 50%, #eef5ea 0%, var(--paper) 64%);
+}
+.botanical-spotlight.hot {
+  background: radial-gradient(circle at 24% 50%, #f8ece6 0%, var(--paper) 64%);
+}
+.spotlight-visual {
+  display: grid;
+  place-items: center;
+  min-height: 190px;
+}
+.spotlight-visual img {
+  max-width: 185px;
+  max-height: 185px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(20, 36, 25, 0.22));
+}
+.botanical-specimen-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.specimen-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 13px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.specimen-tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--forest3);
+  box-shadow: 0 10px 24px rgba(23, 61, 49, 0.08);
+}
+.specimen-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.specimen-dot.hot { background: #dc5c48; }
+.specimen-dot.cold { background: #52a96e; }
+.specimen-img-box {
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  background: radial-gradient(circle, #eef4ea, #dfeadc);
+  display: grid;
+  place-items: center;
+  flex: none;
+  padding: 5px;
+}
+.specimen-tile.hot .specimen-img-box {
+  background: radial-gradient(circle, #f7ede8, #eeddd6);
+}
+.specimen-img-box img {
+  max-width: 48px;
+  max-height: 48px;
+  object-fit: contain;
+}
+.specimen-tile strong {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: var(--forest);
+  font-weight: 400;
+}
+.specimen-tile small {
+  display: block;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* 5.5 Comunidad & Gobernanza */
+.community-showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 36px;
+  align-items: center;
+}
+.community-photo-card {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 48px rgba(18, 43, 33, 0.1);
+}
+.community-photo-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.community-photo-caption {
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--forest);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.governance-flow-diagram {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.gov-node {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+.gov-node > span {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 12px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.gov-node strong {
+  display: block;
+  font-size: 13px;
+  color: var(--forest);
+}
+.gov-node small {
+  display: block;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* 5.6 Calendario Lunar Orbital */
+.lunar-orbital-stage {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+  margin-top: 22px;
+}
+.lunar-central-dial {
+  padding: 22px 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: linear-gradient(160deg, var(--surface-soft), var(--paper));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lunar-dial-ring {
+  width: 152px;
+  height: 152px;
+  border-radius: 50%;
+  border: 2px dashed rgba(84, 133, 102, 0.45);
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+.lunar-dial-core {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2d6150, #143328);
+  color: #f4f7f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 12px 26px rgba(18, 43, 33, 0.22);
+}
+.lunar-dial-core i {
+  font-size: 24px;
+  color: #e4edd1;
+  margin-bottom: 4px;
+}
+.lunar-dial-core strong {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+.lunar-dial-core small {
+  font-size: 10.5px;
+  color: #c5d9c8;
+}
+.lunar-horizon-track {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.lunar-phase-node {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.lunar-phase-node .lunar-orb {
+  margin-bottom: 0;
+  flex: none;
+}
+.lunar-phase-node.active {
+  border-color: var(--forest);
+  background: linear-gradient(160deg, #eff5ea, #ffffff);
+  box-shadow: 0 10px 26px rgba(23, 61, 49, 0.08);
+}
+
+/* 5.7 Progresión horizontal de niveles */
+.level-progression-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+.level-milestone {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.level-milestone + .level-milestone {
+  border-left: 1px solid var(--line);
+}
+.level-milestone span {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sage);
+}
+.level-milestone strong {
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--forest);
+}
+.level-milestone small {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.lunar-orb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+  font-size: 20px;
+  background: var(--sage-soft);
+  color: var(--forest);
+}
+
+.lunar-phase-card.active .lunar-orb {
+  background: var(--forest);
+  color: #e4edd1;
+}
+
+.landing-cta-banner {
+  background: var(--forest);
+  color: #f4f7f1;
+  border-radius: 18px;
+  padding: 46px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin: 40px 0 20px;
+}
+
+.landing-cta-banner h2 {
+  color: #ffffff !important;
+  font-family: Georgia, serif;
+  margin: 0 0 8px;
+}
+
+.landing-cta-banner p {
+  color: #cfe0d3;
+  margin: 0;
+  max-width: 540px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 28px;
+  padding: 36px 0 24px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.footer-grid h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--forest);
+  margin-bottom: 10px;
+}
+
+.footer-links {
+  display: grid;
+  gap: 6px;
+}
+
+.footer-links a,
+.footer-links button {
+  color: var(--muted);
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+.footer-links a:hover,
+.footer-links button:hover {
+  color: var(--forest);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   2. CATÁLOGO BOTÁNICO REAL (SIN FONDOS RECTANGULARES)
+   -------------------------------------------------------------------------- */
+.plant-card {
+  background: var(--paper) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 14px !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.plant-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--forest3) !important;
+  box-shadow: 0 14px 34px rgba(23, 61, 49, 0.08) !important;
+}
+
+.plant-visual {
+  height: 215px !important;
+  background: radial-gradient(circle at 50% 45%, #f8fbf5 0%, #e4eee0 100%);
+  padding: 16px;
+  border-radius: 14px 14px 0 0 !important;
+}
+
+.plant-visual.hot {
+  background: radial-gradient(circle at 50% 45%, #fbf7f3 0%, #f1e3dc 100%);
+}
+
+.plant-visual img.plant-cutout {
+  width: auto !important;
+  height: auto !important;
+  max-width: 88%;
+  max-height: 176px;
+  object-fit: contain !important;
+  filter: drop-shadow(0 12px 16px rgba(24, 42, 31, 0.22));
+  transition: transform 0.28s ease;
+}
+
+.plant-card:hover .plant-visual img.plant-cutout {
+  transform: scale(1.05);
+}
+
+.plant-visual img.plant-photo-rect {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.plant-body {
+  padding: 18px 20px 18px !important;
+}
+
+.plant-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 8px 0 10px;
+}
+
+.plant-detail-hero {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 50%, #eef5ea, #f9faf6);
+  border: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+
+.plant-detail-hero.hot {
+  background: radial-gradient(circle at 30% 50%, #f6e9e3, #fbf9f6);
+}
+
+.plant-detail-img-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 190px;
+}
+
+.plant-detail-img-wrap img {
+  max-width: 200px;
+  max-height: 190px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 20px rgba(20, 35, 25, 0.24));
+}
+
+/* --------------------------------------------------------------------------
+   3. HUERTO VIRTUAL 2D REALISTA (PARCELAS, SURCOS, COORDENADAS A1..Z30)
+   -------------------------------------------------------------------------- */
+.garden-plot-shell {
+  position: relative;
+  border-radius: 16px;
+  background: url("/assets/terrain/paths-borders.webp") center/380px repeat;
+  padding: 14px;
+  border: 2px solid #755b3f;
+  box-shadow: 0 16px 42px rgba(22, 34, 24, 0.14);
+}
+
+.garden-plot-shell.has-fence {
+  border: 4px dashed #5d462e;
+  box-shadow: inset 0 0 0 3px rgba(214, 198, 169, 0.35), 0 16px 42px rgba(22, 34, 24, 0.16);
+}
+
+.garden-plot-shell.arch-VERTICAL {
+  background: linear-gradient(160deg, #3c352d, #2d2620);
+  border-color: #6b5845;
+}
+
+.garden-plot-shell.arch-PISO {
+  background: linear-gradient(160deg, #8b7b6b, #6e6052);
+  border-color: #5c4e41;
+}
+
+.garden-plot-shell.arch-COLGANTE {
+  background: linear-gradient(160deg, #4b5d47, #354532);
+  border-color: #5c6e54;
+}
+
+.garden-plot-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(24, 34, 27, 0.84);
+  color: #f3f5ef;
+  padding: 9px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  backdrop-filter: blur(4px);
+}
+
+.garden-plot-banner strong {
+  color: #dce7c5;
+}
+
+.garden-drip-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #b7d9ec;
+}
+
+.garden-matrix-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-color: #8dab8f rgba(0, 0, 0, 0.2);
+}
+
+.garden-matrix {
+  display: grid;
+  grid-template-columns: 36px repeat(var(--grid-cols, 4), minmax(var(--cell-min, 128px), 1fr));
+  gap: 8px;
+  align-items: stretch;
+  min-width: max-content;
+  width: 100%;
+}
+
+.garden-matrix[data-zoom="compact"] {
+  --cell-min: 96px;
+}
+
+.garden-matrix[data-zoom="large"] {
+  --cell-min: 162px;
+}
+
+.grid-col-head,
+.grid-row-head {
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #f4f3ea;
+  background: rgba(23, 38, 29, 0.85);
+  border-radius: 7px;
+  user-select: none;
+}
+
+.grid-col-head {
+  height: 28px;
+}
+
+.grid-row-head {
+  position: sticky;
+  left: 0;
+  z-index: 6;
+  min-height: 132px;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.28);
+}
+
+.grid-corner-head {
+  position: sticky;
+  left: 0;
+  z-index: 7;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: rgba(16, 29, 22, 0.94);
+  color: #cbd9be;
+  font-size: 10px;
+  border-radius: 7px;
+}
+
+.garden-parcel {
+  position: relative;
+  min-height: 152px;
+  border-radius: 11px;
+  border: 2px solid rgba(226, 214, 189, 0.28);
+  background: #382b20;
+  padding: 8px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  color: #f6f4ec;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.garden-parcel:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.garden-parcel:focus-visible {
+  outline: 3px solid #e4cb7d;
+  outline-offset: 2px;
+}
+
+.garden-parcel[hidden] {
+  display: none !important;
+}
+
+/* Parcela vacía: misma tierra fija debajo */
+.garden-parcel.is-empty {
+  border-style: dashed;
+  border-color: rgba(233, 226, 206, 0.42);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+}
+
+.garden-parcel.is-empty:hover:not(:disabled) {
+  border-color: #dce8bc;
+}
+
+
+/* Bordes y señalética térmica */
+.garden-parcel.thermal-CALIENTE {
+  border-color: #d46b57;
+  box-shadow: inset 0 0 0 1px rgba(212, 107, 87, 0.45), 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.garden-parcel.thermal-FRIA {
+  border-color: #6ab580;
+  box-shadow: inset 0 0 0 1px rgba(106, 181, 128, 0.45), 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.parcel-top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  z-index: 3;
+  width: 100%;
+}
+
+.parcel-coord {
+  position: relative;
+  z-index: 3;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: rgba(16, 26, 20, 0.82);
+  color: #f3f2e8;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+.garden-parcel.is-empty .parcel-coord {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+}
+
+.parcel-thermal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid #ffffff;
+  flex: none;
+}
+
+.parcel-thermal-dot.hot {
+  background: #dc5c48;
+}
+
+.parcel-thermal-dot.cold {
+  background: #52a96e;
+}
+
+.parcel-plant-layer {
+  position: relative;
+  flex: 1;
+  min-height: 76px;
+  display: grid;
+  place-items: center;
+  padding: 4px 0;
+  z-index: 2;
+}
+
+.parcel-plant-layer img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.62));
+  transition: transform 0.35s cubic-bezier(.2,.7,.3,1), opacity 0.28s ease;
+  pointer-events: none;
+}
+
+.parcel-plant-layer .parcel-sprout-img {
+  max-height: 52px;
+  max-width: 68%;
+}
+
+.parcel-plant-layer .parcel-plant-img {
+  max-height: 78px;
+  max-width: 90%;
+}
+
+.parcel-plant-layer[data-stage="PREPARACION"] .parcel-sprout-img,
+.parcel-plant-layer[data-stage="PREPARACION"] .parcel-plant-img {
+  opacity: 0;
+  transform: scale(0.4) translateY(8px);
+}
+.parcel-plant-layer[data-stage="SIEMBRA"] .parcel-sprout-img {
+  opacity: 1;
+  transform: scale(0.95) translateY(0);
+}
+.parcel-plant-layer[data-stage="SIEMBRA"] .parcel-plant-img {
+  opacity: 0;
+  transform: scale(0.45) translateY(8px);
+}
+.parcel-plant-layer[data-stage="CRECIMIENTO"] .parcel-sprout-img {
+  opacity: 0;
+}
+.parcel-plant-layer[data-stage="CRECIMIENTO"] .parcel-plant-img {
+  opacity: 0.96;
+  transform: scale(0.78) translateY(3px);
+}
+.parcel-plant-layer[data-stage="COSECHA"] .parcel-sprout-img {
+  opacity: 0;
+}
+.parcel-plant-layer[data-stage="COSECHA"] .parcel-plant-img {
+  opacity: 1;
+  transform: scale(1.06) translateY(-1px);
+}
+.parcel-prep-chip {
+  position: relative;
+  background: rgba(20, 30, 23, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: #e6eedb;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.parcel-signage {
+  position: relative;
+  background: rgba(17, 27, 21, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 7px;
+  padding: 5px 7px;
+  z-index: 3;
+  backdrop-filter: blur(3px);
+}
+
+.parcel-signage h3 {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0 0 2px;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.parcel-signage-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  font-size: 9.5px;
+  color: #c5d6c5;
+}
+
+.parcel-empty-cta {
+  position: relative;
+  z-index: 3;
+  background: rgba(18, 30, 23, 0.78);
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #e4edd1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.garden-matrix[data-zoom="compact"] .garden-parcel { min-height: 112px; padding: 6px; }
+.garden-matrix[data-zoom="compact"] .parcel-plant-layer { min-height: 52px; }
+.garden-matrix[data-zoom="compact"] .parcel-plant-layer .parcel-plant-img { max-height: 52px; }
+.garden-matrix[data-zoom="compact"] .parcel-plant-layer .parcel-sprout-img { max-height: 36px; }
+.garden-matrix[data-zoom="large"] .garden-parcel { min-height: 175px; padding: 10px; }
+.garden-matrix[data-zoom="large"] .parcel-plant-layer { min-height: 98px; }
+.garden-matrix[data-zoom="large"] .parcel-plant-layer .parcel-plant-img { max-height: 98px; }
+
+.garden-matrix[data-zoom="compact"] .parcel-plant-img {
+  max-height: 52px;
+}
+
+.garden-matrix[data-zoom="large"] .garden-parcel {
+  min-height: 175px;
+  padding: 10px;
+}
+
+.garden-matrix[data-zoom="large"] .parcel-plant-img {
+  max-height: 98px;
+}
+
+/* Vista de gestión (tabla unificada con los mismos datos y filtros) */
+.management-table-wrap {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.management-plant-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.management-plant-cell img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.18));
+}
+
+/* Vista previa de planta al asociar cultivo */
+.crop-plant-preview {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+}
+
+.crop-plant-preview img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+/* ==========================================================================
+   3B. MODALES ADAPTATIVOS DE 3 ZONAS, SELECTOR DE PLANTAS, CUADRÍCULA Y UPLOAD
+   ========================================================================== */
+#appModal .modal-dialog {
+  max-width: min(560px, calc(100vw - 24px));
+  margin: 12px auto;
+}
+#appModal .modal-dialog.modal-sm {
+  max-width: min(410px, calc(100vw - 24px));
+}
+#appModal .modal-dialog.modal-lg {
+  max-width: min(840px, calc(100vw - 24px));
+}
+#appModal .modal-content {
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px !important;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+}
+#appModal .modal-header {
+  flex: none;
+  padding: 15px 22px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.modal-title-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+#appModal .modal-title {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--forest);
+  margin: 0;
+  line-height: 1.2;
+}
+.modal-subtitle-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--sage-soft);
+  color: var(--forest);
+}
+#appModal .modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 22px;
+}
+#appModal .modal-footer {
+  flex: none;
+  padding: 11px 22px;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+#appModal .form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
+  row-gap: 12px;
+}
+#appModal .wave-field {
+  min-height: 50px;
+  padding-top: 12px;
+}
+#appModal .wave-label {
+  top: 20px;
+}
+#appModal .wave-input:focus ~ .wave-label,
+#appModal .wave-input:not(:placeholder-shown) ~ .wave-label {
+  top: 3px;
+}
+#appModal .select-field {
+  min-height: 50px;
+}
+#appModal .form-section {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+#appModal .form-section.mt-0 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+#appModal .form-section h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--forest);
+  margin-bottom: 10px;
+}
+.confirm-modal-body {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 4px 0;
+}
+.confirm-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f9e7e4;
+  color: #b44b3e;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  flex: none;
+}
+
+/* Selector inteligente compacto de planta en modal */
+.kp-parcel-context-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 9px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink);
+}
+.kp-selected-plant-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.kp-selected-plant-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: radial-gradient(circle, #eef5ea, #dfeadd);
+  display: grid;
+  place-items: center;
+  flex: none;
+  padding: 4px;
+}
+.kp-selected-plant-thumb.hot {
+  background: radial-gradient(circle, #f8ece6, #eddcd4);
+}
+.kp-selected-plant-thumb img {
+  max-width: 48px;
+  max-height: 48px;
+  object-fit: contain;
+}
+.kp-selected-plant-info {
+  min-width: 0;
+  flex: 1;
+}
+.kp-picker-search {
+  max-width: 190px;
+  height: 30px;
+  font-size: 11.5px;
+  padding: 4px 8px;
+}
+.kp-plant-picker-list {
+  max-height: 156px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  padding: 4px;
+  display: grid;
+  gap: 3px;
+}
+.kp-picker-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  text-align: left;
+  color: var(--ink);
+}
+.kp-picker-option:hover {
+  background: var(--surface-soft);
+}
+.kp-picker-option.selected {
+  background: var(--sage-soft);
+  border-color: rgba(84, 133, 102, 0.45);
+}
+.kp-opt-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  background: var(--surface-soft);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.kp-opt-thumb img {
+  max-width: 28px;
+  max-height: 28px;
+  object-fit: contain;
+}
+.kp-opt-text {
+  flex: 1;
+  min-width: 0;
+}
+.kp-opt-text strong {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.15;
+}
+.kp-opt-text small {
+  display: block;
+  font-size: 10.5px;
+  font-style: italic;
+  color: var(--muted);
+}
+.kp-opt-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+/* Configurador visual de Filas × Columnas */
+.kp-grid-configurator {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.kp-grid-controls {
+  display: grid;
+  gap: 12px;
+}
+.kp-stepper {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  gap: 6px;
+  align-items: center;
+}
+.kp-step-btn {
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--forest);
+  font-weight: 700;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+}
+.kp-step-btn:hover {
+  background: var(--sage-soft);
+  border-color: var(--forest3);
+}
+.kp-grid-preview-wrap {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+.kp-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--preview-cols, 4), minmax(0, 1fr));
+  gap: 4px;
+}
+.kp-mini-cell {
+  background: #463526;
+  color: #f3efe4;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  padding: 4px 2px;
+}
+.kp-mini-cell.occupied {
+  background: #2f5e44;
+  border-color: #9ec59f;
+}
+.kp-mini-ellipsis {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  padding-top: 4px;
+}
+
+/* Dropzone de fotografía de planta */
+.kp-dropzone {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.kp-dropzone.is-dragover {
+  border-color: var(--forest);
+  background: var(--sage-soft);
+}
+.kp-dropzone-preview {
+  width: 78px;
+  height: 78px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  flex: none;
+  overflow: hidden;
+  padding: 4px;
+}
+.kp-dropzone-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.kp-dropzone-empty-icon {
+  font-size: 26px;
+  color: var(--muted);
+}
+.kp-dropzone-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Dashboard y leyenda */
+.dash-split-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 20px;
+  margin-top: 20px;
+}
+.dash-box {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+.dash-garden-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+.garden-legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Barra de estadísticas de huerto */
+.stats-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-mini-box {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.stat-mini-box span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.stat-mini-box strong {
+  display: block;
+  font-size: 22px;
+  color: var(--forest);
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   4. MODO OSCURO INTEGRAL
+   -------------------------------------------------------------------------- */
+html[data-theme="dark"] .botanical-spotlight {
+  background: radial-gradient(circle at 24% 50%, #244031 0%, var(--paper) 64%);
+}
+html[data-theme="dark"] .botanical-spotlight.hot {
+  background: radial-gradient(circle at 24% 50%, #443129 0%, var(--paper) 64%);
+}
+html[data-theme="dark"] .specimen-tile,
+html[data-theme="dark"] .gov-node,
+html[data-theme="dark"] .lunar-phase-node,
+html[data-theme="dark"] .level-progression-track,
+html[data-theme="dark"] .dash-box,
+html[data-theme="dark"] .community-photo-caption {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="dark"] .specimen-tile strong,
+html[data-theme="dark"] .gov-node strong,
+html[data-theme="dark"] .level-milestone strong,
+html[data-theme="dark"] .community-photo-caption {
+  color: #e4ece3;
+}
+html[data-theme="dark"] .specimen-img-box {
+  background: radial-gradient(circle, #2a4636, #1c3125);
+}
+html[data-theme="dark"] .specimen-tile.hot .specimen-img-box {
+  background: radial-gradient(circle, #46322b, #2d201c);
+}
+html[data-theme="dark"] .lunar-central-dial {
+  background: linear-gradient(160deg, #1b2f24, #15251d);
+  border-color: var(--line);
+}
+html[data-theme="dark"] .lunar-phase-node.active {
+  background: linear-gradient(155deg, #244031, #1c3125);
+  border-color: #6ea77d;
+}
+html[data-theme="dark"] .gov-node > span {
+  background: #9ec59f;
+  color: #102b20;
+}
+html[data-theme="dark"] .level-milestone + .level-milestone {
+  border-left-color: var(--line);
+}
+html[data-theme="dark"] #appModal .modal-content,
+html[data-theme="dark"] #appModal .modal-header,
+html[data-theme="dark"] #appModal .modal-footer,
+html[data-theme="dark"] .kp-selected-plant-strip,
+html[data-theme="dark"] .kp-plant-picker-list,
+html[data-theme="dark"] .kp-dropzone-preview {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="dark"] #appModal .modal-title,
+html[data-theme="dark"] #appModal .form-section h3,
+html[data-theme="dark"] .kp-step-btn {
+  color: #e4ece3;
+}
+html[data-theme="dark"] .kp-parcel-context-bar,
+html[data-theme="dark"] .kp-grid-preview-wrap,
+html[data-theme="dark"] .kp-dropzone,
+html[data-theme="dark"] .dash-garden-row,
+html[data-theme="dark"] .garden-legend-bar,
+html[data-theme="dark"] .kp-step-btn,
+html[data-theme="dark"] .kp-opt-thumb {
+  background: #1a2d22;
+  border-color: #385042;
+  color: #dce6da;
+}
+html[data-theme="dark"] .kp-picker-option:hover {
+  background: #233c2e;
+}
+html[data-theme="dark"] .kp-picker-option.selected {
+  background: #2b4a39;
+  border-color: #6ea77d;
+}
+html[data-theme="dark"] .modal-subtitle-pill {
+  background: #2c4a38;
+  color: #dcebd9;
+}
+html[data-theme="dark"] .kp-selected-plant-thumb {
+  background: radial-gradient(circle, #2a4636, #1c3125);
+}
+html[data-theme="dark"] .kp-selected-plant-thumb.hot {
+  background: radial-gradient(circle, #46322b, #2d201c);
+}
+
+html[data-theme="dark"] .journey-step,
+html[data-theme="dark"] .journey-visual-stage,
+html[data-theme="dark"] .typology-card,
+html[data-theme="dark"] .lunar-phase-card,
+html[data-theme="dark"] .stat-mini-box,
+html[data-theme="dark"] .management-table-wrap {
+  background: var(--paper);
+  border-color: var(--line);
+}
+html[data-theme="dark"] .journey-step.is-active,
+
+html[data-theme="dark"] .journey-step.featured,
+html[data-theme="dark"] .lunar-phase-card.active {
+  background: linear-gradient(155deg, #244031, #1c3125);
+  border-color: #6ea77d;
+}
+html[data-theme="dark"] .journey-step::before {
+  background: var(--paper);
+  border-color: var(--line);
+}
+html[data-theme="dark"] .journey-step.is-active::before {
+  background: #9ec59f;
+  border-color: #9ec59f;
+}
+html[data-theme="dark"] .journey-stage-pill {
+  background: #2c4a38;
+  color: #dcebd9;
+}
+html[data-theme="dark"] .journey-dot {
+  background: #1a2d22;
+  border-color: #3d5948;
+  color: #b8cab9;
+}
+html[data-theme="dark"] .journey-dot.active {
+  background: #9ec59f;
+  border-color: #9ec59f;
+  color: #102b20;
+}
+html[data-theme="dark"] .stage-caption-live {
+  color: #b9ddb9;
+}
+
+html[data-theme="dark"] .journey-step h3,
+html[data-theme="dark"] .typology-card strong,
+html[data-theme="dark"] .stat-mini-box strong,
+html[data-theme="dark"] .footer-grid h4 {
+  color: #e4ece3;
+}
+
+html[data-theme="dark"] .journey-icon,
+html[data-theme="dark"] .lunar-orb {
+  background: #2c4a38;
+  color: #cbe2ca;
+}
+
+html[data-theme="dark"] .lunar-phase-card.active .lunar-orb {
+  background: #9ec59f;
+  color: #102b20;
+}
+
+html[data-theme="dark"] .landing-hero {
+  background: radial-gradient(circle at 82% 18%, rgba(84, 133, 102, 0.24), transparent 46%), #102b20;
+  color: #f4f7f1;
+}
+html[data-theme="dark"] .landing-hero h1 {
+  color: #ffffff;
+}
+html[data-theme="dark"] .landing-hero h1 em {
+  color: #cde0b6;
+}
+html[data-theme="dark"] .landing-hero-lead {
+  color: #d0dfd4;
+}
+html[data-theme="dark"] .landing-cta-banner {
+  background: #102b20;
+  border: 1px solid #2e4d3d;
+}
+html[data-theme="dark"] .hero-btn {
+  background: #e0e7c9;
+  color: #102b20;
+}
+html[data-theme="dark"] .hero-btn:hover {
+  background: #eff3e2;
+  color: #102b20;
+}
+html[data-theme="dark"] .public-nav .btn-outline-forest {
+  background: #e4ebd2;
+  color: #102b20;
+  border-color: transparent;
+}
+html[data-theme="dark"] .landing-mirror-card {
+  background: #162b20;
+  color: #e6efe3;
+  border-color: rgba(158, 197, 159, 0.28);
+}
+
+html[data-theme="dark"] .landing-showcase-band {
+  background: #182b21;
+}
+
+html[data-theme="dark"] .stage-pill-btn {
+  background: #20352a;
+  color: #dce6da;
+  border-color: #3a5445;
+}
+
+html[data-theme="dark"] .stage-pill-btn.active {
+  background: #9ec59f;
+  color: #102b20;
+  border-color: #9ec59f;
+}
+
+html[data-theme="dark"] .plant-card {
+  background: var(--paper) !important;
+  border-color: var(--line) !important;
+}
+
+html[data-theme="dark"] .plant-visual {
+  background: radial-gradient(circle at 50% 45%, #2a4636 0%, #1c3125 100%);
+}
+
+html[data-theme="dark"] .plant-visual.hot {
+  background: radial-gradient(circle at 50% 45%, #46322b 0%, #2d201c 100%);
+}
+
+html[data-theme="dark"] .plant-detail-hero {
+  background: radial-gradient(circle at 30% 50%, #254132, #1b2f24);
+  border-color: var(--line);
+}
+
+html[data-theme="dark"] .plant-detail-hero.hot {
+  background: radial-gradient(circle at 30% 50%, #443129, #291e1a);
+}
+
+html[data-theme="dark"] .alert-light {
+  background-color: #1d3226 !important;
+  border-color: #385142 !important;
+  color: #dce6da !important;
+}
+
+html[data-theme="dark"] .alert-info {
+  background-color: #1c353a !important;
+  border-color: #2f5761 !important;
+  color: #d2ebf0 !important;
+}
+
+html[data-theme="dark"] .alert-warning {
+  background-color: #3c321b !important;
+  border-color: #6b582c !important;
+  color: #f6e2b3 !important;
+}
+
+html[data-theme="dark"] .bg-light {
+  background-color: #1c3125 !important;
+  color: #e4ece3 !important;
+}
+
+html[data-theme="dark"] .text-dark,
+html[data-theme="dark"] .text-muted,
+html[data-theme="dark"] .text-body-secondary,
+html[data-theme="dark"] .text-secondary {
+  color: #b4c4b6 !important;
+}
+
+html[data-theme="dark"] .badge.bg-light.text-dark {
+  background-color: #284233 !important;
+  color: #e4ece3 !important;
+  border-color: #41604d !important;
+}
+
+html[data-theme="dark"] .nav-tabs {
+  border-bottom-color: #374d40;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link {
+  color: #b4c4b6;
+}
+
+html[data-theme="dark"] .nav-tabs .nav-link.active {
+  background-color: #20352a;
+  border-color: #374d40 #374d40 #20352a;
+  color: #e4ece3;
+}
+
+html[data-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(180%);
+}
+
+html[data-theme="dark"] .crop-plant-preview {
+  background: #1a2d22;
+  border-color: #385042;
+}
+
+html[data-theme="dark"] .table-hover>tbody>tr:hover>* {
+  color: #f0f5ef;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+html[data-theme="dark"] .dropdown-menu,
+html[data-theme="dark"] select option {
+  background-color: #1a2e23;
+  color: #e4ece3;
+}
+
+/* --------------------------------------------------------------------------
+   5. RESPONSIVIDAD (360px - 1920px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .landing-hero-grid,
+  .showcase-grid,
+  .community-showcase-grid,
+  .botanical-showcase-layout,
+  .lunar-orbital-stage,
+  .dash-split-grid {
+    grid-template-columns: 1fr;
+  }
+  .landing-mirror-card {
+    position: static;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .lunar-grid,
+  .typology-strip,
+  .stats-grid-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .kp-grid-configurator {
+    grid-template-columns: 1fr;
+  }
+  .botanical-spotlight {
+    grid-template-columns: 1fr;
+  }
+  .lunar-horizon-track,
+  .level-progression-track,
+  .botanical-specimen-strip {
+    grid-template-columns: 1fr;
+  }
+  .level-milestone + .level-milestone {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  #appModal .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .kp-dropzone {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 991px) {
+  .journey-storyboard {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .journey-stage-col {
+    position: static;
+    top: auto;
+  }
+}
+
+@media (max-height: 540px) {
+  .public-nav {
+    position: static;
+  }
+}
+
+@media (max-width: 850px) {
+  .public-nav {
+    height: auto;
+    min-height: 58px;
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+  .public-nav-links {
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+  }
+  .public-nav-links a {
+    display: inline-flex !important;
+    align-items: center;
+    font-size: 11.5px;
+    padding: 4px 3px;
+  }
+  .public-nav .theme-toggle {
+    min-height: 30px;
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  .public-nav .btn-outline-forest {
+    padding: 6px 9px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .public-content {
+    padding: 0 16px;
+  }
+  .landing-hero {
+    padding: 36px 0 52px;
+  }
+
+  .journey-scene-frame {
+    min-height: 240px;
+    padding: 10px;
+  }
+  .journey-steps-track {
+    padding-left: 18px;
+  }
+  .journey-step {
+    padding: 15px 16px;
+  }
+  .journey-step::before {
+    left: -17px;
+  }
+  .lunar-grid,
+  .typology-strip,
+  .stats-grid-4,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-cta-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 28px 20px;
+  }
+
+  .plant-detail-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .garden-plot-shell {
+    padding: 8px;
+  }
+
+  .garden-matrix {
+    grid-template-columns: 30px repeat(var(--grid-cols, 4), minmax(var(--cell-min, 108px), 1fr));
+    gap: 6px;
+  }
+
+  .grid-row-head {
+    min-height: 118px;
+    font-size: 10px;
+  }
+
+  .garden-parcel {
+    min-height: 128px;
+    padding: 6px;
+  }
+
+  .parcel-plant-layer {
+    min-height: 58px;
+  }
+  .parcel-plant-layer .parcel-plant-img {
+    max-height: 58px;
+  }
+}
+
+@media (max-width: 430px) {
+  .demo-garden-board {
+    padding: 10px;
+  }
+  .demo-garden-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
+  .journey-blueprint-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .public-nav .btn-outline-forest {
+    padding: 7px 12px;
+    font-size: 11.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .journey-step,
+  .journey-dot,
+  .journey-plot-soil,
+  .journey-plot-plant img,
+  .parcel-plant-layer img,
+  .plant-card,
+  .garden-parcel,
+  .demo-parcel,
+  .demo-parcel-plant img,
+  .public-nav-links a::after {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   6. ARQUITECTURA DE INFORMACIÓN UI/UX (DASHBOARD, MÓDULOS, TIMELINE Y TABLAS)
+   ========================================================================== */
+
+/* Dashboard: 5 KPIs & "Qué hacer ahora" */
+.kp-kpi-strip-5 {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.kp-kpi-strip-5 .metric-card,
+.kp-kpi-strip-5 .stat-mini-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 112px;
+  padding: 14px 15px;
+  border-radius: 14px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line, #dfe6db);
+}
+
+.kp-kpi-strip-5 .metric-label,
+.kp-kpi-strip-5 .stat-mini-box span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  padding-right: 36px;
+  max-width: none !important;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.kp-kpi-strip-5 .metric-card strong,
+.kp-kpi-strip-5 .stat-mini-box strong {
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--forest);
+  font-family: Georgia, serif;
+}
+
+.kp-kpi-strip-5 .metric-card small,
+.kp-kpi-strip-5 .stat-mini-box small {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.kp-action-banner {
+  background: linear-gradient(135deg, rgba(42, 92, 62, 0.06), rgba(182, 134, 44, 0.07));
+  border: 1px solid var(--line, #d8e2d3);
+  border-radius: 16px;
+  padding: 14px 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.kp-action-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.kp-action-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line, #dfe6db);
+  color: var(--ink);
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.kp-action-item > span {
+  font-size: 12.5px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.kp-action-item > button {
+  flex-shrink: 0;
+}
+
+.kp-action-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--forest);
+  box-shadow: 0 8px 18px rgba(24, 52, 34, 0.08);
+}
+
+.kp-action-item strong {
+  font-size: 13.5px;
+  color: var(--forest);
+}
+
+.kp-action-item span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Dashboard Mini Timeline */
+.kp-mini-timeline {
+  display: grid;
+  gap: 10px;
+}
+
+.kp-mini-timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(246, 249, 244, 0.85);
+  border: 1px solid var(--line, #e4ebe0);
+}
+
+.kp-mini-timeline-item img {
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--line);
+}
+
+/* Comunidades: Propia vs Colaborador y grilla de metadatos */
+.community-card {
+  display: flex;
+  flex-direction: column;
+  border-top: 3px solid transparent;
+}
+
+.community-card.is-owned {
+  border-top-color: var(--forest);
+}
+
+.community-card.is-shared {
+  border-top-color: #7c9b6f;
+}
+
+.kp-comm-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(244, 247, 241, 0.85);
+  border: 1px solid var(--line, #e2e8de);
+}
+
+.kp-comm-meta-grid small {
+  display: block;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.kp-comm-meta-grid strong {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Huertos: Encabezado fotográfico + KvGrid */
+.kp-garden-thumb-wrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #e9efe5;
+}
+
+.kp-garden-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kp-garden-thumb-badge {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.kp-garden-thumb-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.kp-kv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 8px 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(245, 248, 243, 0.9);
+  border: 1px solid var(--line, #e2e8de);
+}
+
+.kp-kv-grid > div small {
+  display: block;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.kp-kv-grid > div strong {
+  display: block;
+  font-size: 13px;
+  color: var(--ink);
+  word-break: break-word;
+}
+
+/* Modales de detalle estructurados */
+.kp-detail-section {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(248, 250, 247, 0.7);
+  border: 1px solid var(--line, #e4ebe0);
+}
+
+.kp-detail-heading {
+  font-family: Georgia, serif;
+  font-size: 14.5px;
+  color: var(--forest);
+  margin: 0 0 10px;
+}
+
+.kp-two-col-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.kp-info-box {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line, #e3eae0);
+}
+
+.kp-info-box small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--forest);
+  margin-bottom: 4px;
+}
+
+.kp-info-box p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.kp-credit-bar {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kp-mini-garden-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line);
+}
+
+.kp-inline-notice {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(182, 134, 44, 0.12);
+  border: 1px solid rgba(182, 134, 44, 0.35);
+  color: var(--ink);
+  font-size: 12.5px;
+}
+
+.kp-lightbox-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #101b14;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.kp-lightbox-wrap img {
+  max-width: 100%;
+  max-height: 68dvh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Bitácora agrícola: Timeline vertical + Bandeja de Validación */
+.kp-validation-tray {
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(255, 250, 238, 0.9);
+  border: 1px solid rgba(182, 134, 44, 0.35);
+}
+
+.kp-validation-list {
+  display: grid;
+  gap: 10px;
+}
+
+.kp-validation-list .kp-timeline-card {
+  display: grid;
+  grid-template-columns: 92px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line);
+}
+
+.kp-validation-photo-btn {
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eff4ec;
+  cursor: zoom-in;
+  display: block;
+}
+
+.kp-validation-photo-btn img {
+  width: 92px;
+  height: 76px;
+  object-fit: cover;
+  display: block;
+}
+
+.kp-validation-photo-btn.kp-mini-photo img {
+  width: 60px;
+  height: 52px;
+}
+
+.kp-validation-body {
+  min-width: 0;
+}
+
+.kp-validation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.kp-timeline {
+  position: relative;
+  padding-left: 26px;
+  display: grid;
+  gap: 14px;
+}
+
+.kp-timeline::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--line, #d7e2d2);
+}
+
+.kp-timeline-item {
+  position: relative;
+}
+
+.kp-timeline-dot {
+  position: absolute;
+  left: -22px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--forest);
+  border: 2px solid var(--cream, #f9fbf7);
+  box-shadow: 0 0 0 2px var(--line, #d7e2d2);
+}
+
+.kp-timeline-dot.is-approved {
+  background: #2f7d4d;
+}
+
+.kp-timeline-dot.is-rejected {
+  background: #b93838;
+}
+
+.kp-timeline-card {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--line, #dfe6db);
+}
+
+.kp-timeline-thumb img {
+  width: 112px;
+  height: 88px;
+  object-fit: cover;
+}
+
+/* Ranking: barra proporcional */
+.kp-rank-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.kp-rank-bar-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(42, 92, 62, 0.12);
+  overflow: hidden;
+}
+
+.kp-rank-bar-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--forest), #6fa35a);
+  transition: width 0.35s ease;
+}
+
+/* MODO OSCURO PARA COMPONENTES UI/UX */
+html[data-theme="dark"] .kp-kpi-strip-5 .metric-card,
+html[data-theme="dark"] .kp-kpi-strip-5 .stat-mini-box,
+html[data-theme="dark"] .kp-action-item,
+html[data-theme="dark"] .kp-info-box,
+html[data-theme="dark"] .kp-credit-bar,
+html[data-theme="dark"] .kp-mini-garden-row,
+html[data-theme="dark"] .kp-timeline-card,
+html[data-theme="dark"] .kp-validation-list .kp-timeline-card {
+  background: #17281e;
+  border-color: #354b3e;
+  color: #e4ece3;
+}
+
+html[data-theme="dark"] .kp-action-banner {
+  background: linear-gradient(135deg, rgba(64, 128, 88, 0.18), rgba(182, 134, 44, 0.14));
+  border-color: #354b3e;
+}
+
+html[data-theme="dark"] .kp-mini-timeline-item,
+html[data-theme="dark"] .kp-comm-meta-grid,
+html[data-theme="dark"] .kp-kv-grid,
+html[data-theme="dark"] .kp-detail-section {
+  background: #14221a;
+  border-color: #31473a;
+}
+
+html[data-theme="dark"] .kp-comm-meta-grid strong,
+html[data-theme="dark"] .kp-kv-grid > div strong,
+html[data-theme="dark"] .kp-info-box p,
+html[data-theme="dark"] .kp-detail-heading {
+  color: #e4ece3;
+}
+
+html[data-theme="dark"] .kp-kpi-strip-5 .metric-card strong,
+html[data-theme="dark"] .kp-kpi-strip-5 .stat-mini-box strong,
+html[data-theme="dark"] .kp-action-item strong {
+  color: #cde4c9;
+}
+
+html[data-theme="dark"] .kp-action-item > span {
+  color: #dce6da;
+}
+
+html[data-theme="dark"] .kp-garden-thumb-wrap,
+html[data-theme="dark"] .kp-validation-photo-btn {
+  background: #122018;
+  border-color: #374e40;
+}
+
+html[data-theme="dark"] .kp-garden-thumb-badge {
+  background: rgba(20, 34, 26, 0.9);
+  color: #e4ece3;
+}
+
+html[data-theme="dark"] .kp-validation-tray {
+  background: rgba(68, 52, 22, 0.35);
+  border-color: #6b582c;
+}
+
+html[data-theme="dark"] .kp-timeline::before {
+  background: #354b3e;
+}
+
+html[data-theme="dark"] .kp-timeline-dot {
+  border-color: #101b14;
+  box-shadow: 0 0 0 2px #354b3e;
+}
+
+html[data-theme="dark"] .kp-rank-bar-track {
+  background: rgba(197, 223, 194, 0.14);
+}
+
+html[data-theme="dark"] .kp-inline-notice {
+  background: rgba(182, 134, 44, 0.18);
+  border-color: #6b582c;
+  color: #f6e2b3;
+}
+
+/* RESPONSIVIDAD PARA NUEVOS MÓDULOS Y TABLAS MÓVILES */
+@media (max-width: 1120px) {
+  .kp-kpi-strip-5 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .kp-kpi-strip-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .kp-two-col-info {
+    grid-template-columns: 1fr;
+  }
+  .kp-validation-list .kp-timeline-card {
+    grid-template-columns: 76px 1fr;
+  }
+  .kp-validation-actions {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+  .kp-validation-photo-btn img {
+    width: 76px;
+    height: 66px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kp-timeline {
+    padding-left: 18px;
+  }
+  .kp-timeline-dot {
+    left: -15px;
+  }
+  .kp-timeline-card {
+    grid-template-columns: 1fr;
+  }
+  .kp-timeline-thumb img {
+    width: 100%;
+    height: 160px;
+  }
+  .kp-comm-meta-grid,
+  .kp-mini-garden-row {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  /* Colapso automático de tablas administrativas a tarjetas en móvil */
+  .kp-responsive-table thead {
+    display: none;
+  }
+  .kp-responsive-table,
+  .kp-responsive-table tbody,
+  .kp-responsive-table tr,
+  .kp-responsive-table td {
+    display: block;
+    width: 100%;
+  }
+  .kp-responsive-table tr {
+    margin-bottom: 12px;
+    border: 1px solid var(--line, #dfe6db);
+    border-radius: 12px;
+    padding: 8px 10px;
+    background: var(--paper, #fff);
+  }
+  .kp-responsive-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border: 0;
+    padding: 5px 2px;
+    text-align: right;
+    font-size: 12.5px;
+  }
+  .kp-responsive-table td::before {
+    content: attr(data-label);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    text-align: left;
+    flex-shrink: 0;
+  }
+  html[data-theme="dark"] .kp-responsive-table tr,
+  html[data-theme="dark"] .kp-responsive-table td {
+    --bs-table-bg: #17281e;
+    --bs-table-striped-bg: #17281e;
+    background-color: #17281e !important;
+    border-color: #354b3e;
+    color: #e4ece3 !important;
+  }
+}
+
+/* ==========================================================================
+   KAWSAPACHA V2: ESTILOS DE PARCELAS, HIDRATACIÓN, SABERES, RETOS, FORO Y BODEGA
+   ========================================================================== */
+
+/* 1. Tabla de Parcelas Compacta y Tarjetas Móviles */
+.kp-parcel-table {
+  font-size: 13px;
+  background: var(--paper);
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.kp-parcel-table th {
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--line);
+  background-color: var(--chip, rgba(23, 61, 49, 0.05));
+}
+
+.kp-parcel-table td {
+  padding: 8px 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--line);
+}
+
+.kp-parcel-table tr.kp-row-empty td {
+  background-color: var(--paper);
+}
+
+.kp-parcel-table tr.kp-row-occupied td {
+  background-color: var(--paper);
+}
+
+.kp-parcel-table tr:hover td {
+  background-color: rgba(45, 90, 62, 0.04);
+}
+
+html[data-theme="dark"] .kp-parcel-table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.kp-parcel-mobile-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kp-parcel-card {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.kp-parcel-card.is-empty {
+  border-style: dashed;
+  background: rgba(23, 61, 49, 0.02);
+}
+
+html[data-theme="dark"] .kp-parcel-card.is-empty {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* 2. Tarjeta de Seguimiento Hídrico */
+.kp-hydric-card {
+  background: var(--paper);
+  border-color: var(--line) !important;
+}
+
+html[data-theme="dark"] .kp-hydric-card {
+  background: #1b2f24;
+  border-color: #334d3c !important;
+}
+
+/* 3. Saberes y Talentos Ancestrales */
+.kp-talent-card {
+  background: var(--paper);
+  border-color: var(--line) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kp-talent-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* 4. Misiones y Retos */
+.kp-challenge-card {
+  background: var(--paper);
+  border-color: var(--line) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.kp-challenge-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* 5. Foro Comunitario / La Asamblea */
+.kp-forum-card {
+  background: var(--paper);
+  border-color: var(--line) !important;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.kp-forum-card:hover {
+  border-color: var(--forest) !important;
+  transform: translateY(-1px);
+}
+
+.kp-comment-item {
+  border-color: var(--line) !important;
+}
+
+/* 6. Bodega Comunitaria / El Resguardo */
+.kp-inventory-card, .kp-drying-card {
+  background: var(--paper);
+  border-color: var(--line) !important;
+}
+
+.kp-trace-label-100g {
+  background: #ffffff !important;
+  color: #17281e !important;
+  border: 2px solid #2d5a3e !important;
+}
+
+/* Botones de Forest y Outline-Forest */
+.btn-forest {
+  background-color: var(--forest);
+  color: #ffffff;
+  border: 1px solid var(--forest);
+  font-weight: 500;
+}
+
+.btn-forest:hover {
+  background-color: #1f4f3c;
+  color: #ffffff;
+}
+
+.btn-outline-forest {
+  background-color: transparent;
+  color: var(--forest);
+  border: 1px solid var(--forest);
+  font-weight: 500;
+}
+
+.btn-outline-forest:hover {
+  background-color: var(--forest);
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .btn-outline-forest {
+  color: #72cca2;
+  border-color: #72cca2;
+}
+
+html[data-theme="dark"] .btn-outline-forest:hover {
+  background-color: #72cca2;
+  color: #17281e;
+}
+
+html[data-theme="dark"] .btn-forest {
+  background-color: #2e6b52;
+  border-color: #2e6b52;
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .btn-forest:hover {
+  background-color: #388464;
+}
+
+/* =========================================================================
+   ASISTENTES MODERNOS COMPACTOS (CLEAN HORIZONTAL STEPPER SYSTEM)
+   ========================================================================= */
+
+.modal-dialog.modal-wizard {
+  max-width: 740px;
+  margin: 1.5rem auto;
+}
+
+.modal-dialog.modal-wizard .modal-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.kp-modal-card,
+.kp-wizard-shell {
+  display: flex;
+  flex-direction: column;
+  max-height: min(90vh, 760px);
+  background: var(--paper, #ffffff);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line, rgba(23, 61, 49, 0.12));
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+  width: 100%;
+}
+
+.kp-modal-header,
+.kp-wizard-header {
+  padding: 16px 22px 14px;
+  border-bottom: 1px solid var(--line, rgba(23, 61, 49, 0.08));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--paper, #ffffff);
+}
+
+.kp-modal-icon-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(23, 61, 49, 0.08);
+  color: var(--forest, #173d31);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.kp-modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink, #173d31);
+  line-height: 1.25;
+}
+
+.kp-modal-subtitle {
+  font-size: 12px;
+  color: var(--muted, #667085);
+}
+
+.kp-wizard-step-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #173d31;
+  background: rgba(23, 61, 49, 0.08);
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+html[data-theme="dark"] .kp-wizard-step-tag {
+  color: #72cca2;
+  background: rgba(114, 204, 162, 0.15);
+}
+
+/* Stepper horizontal compacto */
+.kp-horizontal-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 22px;
+  background: var(--cream, #f7f8f3);
+  border-bottom: 1px solid var(--line, rgba(23, 61, 49, 0.08));
+  gap: 6px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.kp-hstep-item,
+.kp-wizard-step-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  color: var(--muted, #667085);
+  transition: all 0.2s ease;
+}
+
+.kp-hstep-badge,
+.kp-wizard-step-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  border: 1.5px solid var(--line, #cbd5e1);
+  background: transparent;
+  color: var(--muted, #64748b);
+  transition: all 0.2s ease;
+}
+
+.kp-hstep-item.active .kp-hstep-badge,
+.kp-wizard-step-node.active .kp-wizard-step-badge {
+  background: var(--forest, #173d31);
+  border-color: var(--forest, #173d31);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(23, 61, 49, 0.25);
+}
+
+.kp-hstep-item.completed .kp-hstep-badge,
+.kp-wizard-step-node.completed .kp-wizard-step-badge {
+  background: #198754;
+  border-color: #198754;
+  color: #ffffff;
+}
+
+.kp-hstep-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.15;
+}
+
+.kp-hstep-num {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.7;
+  font-weight: 600;
+}
+
+.kp-hstep-label,
+.kp-step-label {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kp-hstep-item.active .kp-hstep-label,
+.kp-wizard-step-node.active .kp-step-label {
+  font-weight: 700;
+  color: var(--forest, #173d31);
+}
+
+.kp-hstep-item.completed .kp-hstep-label,
+.kp-wizard-step-node.completed .kp-step-label {
+  color: var(--ink, #173d31);
+}
+
+.kp-hstep-line {
+  flex: 1;
+  height: 2px;
+  background: var(--line, rgba(23, 61, 49, 0.12));
+  margin: 0 6px;
+  min-width: 10px;
+  border-radius: 2px;
+}
+
+.kp-hstep-item.completed .kp-hstep-line {
+  background: #198754;
+}
+
+.kp-modal-body,
+.kp-wizard-body {
+  padding: 20px 24px;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  background: var(--paper, #ffffff);
+}
+
+.kp-wizard-step {
+  display: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.kp-wizard-step.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.kp-modal-footer,
+.kp-wizard-footer {
+  padding: 12px 24px;
+  border-top: 1px solid var(--line, rgba(23, 61, 49, 0.08));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--cream, #f7f8f3);
+  gap: 12px;
+}
+
+/* Cabecera compacta para la vista de huerto (gardenPage) */
+.garden-compact-header {
+  padding: 4px 0 8px;
+}
+
+.garden-compact-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink, #173d31);
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+
+.garden-meta-pills .badge {
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 5px 9px;
+  border-radius: 6px;
+}
+
+/* Modos de visualización tablet y móvil */
+@media (max-width: 991px) {
+  .modal-dialog.modal-wizard {
+    max-width: 92vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .modal-dialog.modal-wizard {
+    max-width: 100vw;
+    margin: 0;
+    height: 100dvh;
+  }
+  .modal-dialog.modal-wizard .modal-content {
+    height: 100dvh;
+    border-radius: 0 !important;
+    background: #ffffff !important;
+  }
+  .kp-modal-card,
+  .kp-wizard-shell {
+    flex-direction: column;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+    border: none;
+    background: #ffffff;
+  }
+  .kp-horizontal-stepper {
+    padding: 8px 14px;
+    gap: 4px;
+  }
+  .kp-hstep-info,
+  .kp-step-label {
+    display: none;
+  }
+  .kp-hstep-line {
+    margin: 0 3px;
+    min-width: 8px;
+  }
+  .kp-modal-header,
+  .kp-wizard-header {
+    padding: 12px 16px;
+  }
+  .kp-modal-body,
+  .kp-wizard-body {
+    padding: 16px;
+    background: #ffffff;
+    flex: 1;
+    -webkit-overflow-scrolling: touch;
+  }
+  .kp-modal-footer,
+  .kp-wizard-footer {
+    padding: 12px 16px;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    background: #ffffff;
+  }
+}
+
+/* Modo oscuro para asistentes por fases y modales */
+html[data-theme="dark"] .modal-dialog.modal-wizard .modal-content,
+html[data-theme="dark"] .kp-modal-card,
+html[data-theme="dark"] .kp-wizard-shell {
+  background: #15251d !important;
+  border-color: #374d40;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="dark"] .kp-modal-header,
+html[data-theme="dark"] .kp-wizard-header {
+  background: #15251d !important;
+  border-color: #374d40;
+  color: #e4ece3;
+}
+
+html[data-theme="dark"] .kp-modal-icon-badge {
+  background: rgba(114, 204, 162, 0.15);
+  color: #72cca2;
+}
+
+html[data-theme="dark"] .kp-modal-title {
+  color: #e4ece3 !important;
+}
+
+html[data-theme="dark"] .kp-modal-subtitle {
+  color: #a9b9ac !important;
+}
+
+html[data-theme="dark"] .kp-horizontal-stepper {
+  background: #1a2e24 !important;
+  border-color: #374d40;
+}
+
+html[data-theme="dark"] .kp-hstep-badge,
+html[data-theme="dark"] .kp-wizard-step-badge {
+  border-color: #4a6354;
+  color: #a9b9ac;
+}
+
+html[data-theme="dark"] .kp-hstep-item.active .kp-hstep-badge,
+html[data-theme="dark"] .kp-wizard-step-node.active .kp-wizard-step-badge {
+  background: #72cca2 !important;
+  border-color: #72cca2 !important;
+  color: #0f1d16 !important;
+  box-shadow: 0 2px 6px rgba(114, 204, 162, 0.3);
+}
+
+html[data-theme="dark"] .kp-hstep-item.completed .kp-hstep-badge,
+html[data-theme="dark"] .kp-wizard-step-node.completed .kp-wizard-step-badge {
+  background: #25704d !important;
+  border-color: #25704d !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .kp-hstep-item.active .kp-hstep-label,
+html[data-theme="dark"] .kp-wizard-step-node.active .kp-step-label {
+  color: #72cca2 !important;
+}
+
+html[data-theme="dark"] .kp-hstep-item.completed .kp-hstep-label,
+html[data-theme="dark"] .kp-wizard-step-node.completed .kp-step-label {
+  color: #e4ece3 !important;
+}
+
+html[data-theme="dark"] .kp-hstep-line {
+  background: #374d40;
+}
+
+html[data-theme="dark"] .kp-hstep-item.completed .kp-hstep-line {
+  background: #25704d;
+}
+
+html[data-theme="dark"] .kp-modal-body,
+html[data-theme="dark"] .kp-wizard-body {
+  background: #15251d !important;
+  color: #e4ece3 !important;
+}
+
+html[data-theme="dark"] .kp-modal-footer,
+html[data-theme="dark"] .kp-wizard-footer {
+  background: #1a2e24 !important;
+  border-color: #374d40;
+}
+
+html[data-theme="dark"] .kp-modal-header .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+html[data-theme="dark"] .garden-compact-title {
+  color: #e4ece3 !important;
+}
+
+html[data-theme="dark"] .garden-compact-header .badge.bg-light {
+  background-color: #20352a !important;
+  color: #e4ece3 !important;
+  border-color: #374d40 !important;
+}
+
+html[data-theme="dark"] .bg-forest {
+  background-color: #244937 !important;
+  color: #d8f3e5 !important;
+}
+
+html[data-theme="dark"] .text-forest {
+  color: #72cca2 !important;
+}
+
+html[data-theme="dark"] .bg-light {
+  background-color: #1b2f24 !important;
+  color: #e4ece3 !important;
+  border-color: #334d3c !important;
+}
+
+html[data-theme="dark"] .bg-paper {
+  background-color: #20352a !important;
+  color: #e4ece3 !important;
+}
+
+/* Ajustes responsivos para encabezados, controles y modales en pantallas móviles */
+@media (max-width: 768px) {
+  .section-heading {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .section-heading > div:last-child {
+    width: 100% !important;
+  }
+  .section-heading .btn-group {
+    width: 100% !important;
+    display: flex !important;
+  }
+  .section-heading .btn-group .btn {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  .page-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .page-head > div:last-child {
+    width: 100% !important;
+  }
+}
